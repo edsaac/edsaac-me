@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+{% for course in courses %}
+    <h2 id="{{ course.id }}"><small>[{{ course.number }}]</small><br>
+        {{ course.name }}
+    </h2>
+    {% for lesson in course.lessons %}
+        <h3> > {{ lesson.title }} </h3>
+        <div class="course-info">
+            <div class="course-info-img">
+                <img src="{{ lesson.img }}">
+            </div>
+            <div class="course-info-text">
+                <p>
+                    {{ lesson.abstract }}
+                </p>
+                <div class="badge-container">
+                    <a href="{{ lesson.source_code }}">
+                        <img class="badge" alt="Static Badge" src="https://img.shields.io/badge/code-Source%20code-white?style=flat&logo=github&logoColor=white&label=GitHub&labelColor=%23888&color=%23399">
+                    </a>
+                    <a href="{{ lesson.web_app }}">
+                        <img class="badge" alt="Static Badge" src="https://img.shields.io/badge/code-Web%20app-white?style=flat&logo=streamlit&logoColor=%23ff4b4b&label=Streamlit&labelColor=pink&color=%23399">
+                    </a>
+                    {% if lesson.doi %}
+                        <a href="{{ lesson.doi }}">
+                            <img class="badge" alt="Static Badge" src="https://zenodo.org/badge/526700230.svg">
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% if not loop.last %}
+            <div class='divider'></div>
+        {% endif %}
+    {% endfor %}
+    {% if not loop.last %}
+        <p style="text-align: right;">⁂</p>
+    {% endif %}
+{% endfor %}
+{% endblock %}
