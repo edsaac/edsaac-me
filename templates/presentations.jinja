@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+{% for presentation in presentations %}
+    <h3 id="{{ presentation.id }}">
+        <a href="{{ presentation.url }}">
+            > {{ presentation.title }}
+        </a>
+    </h3>
+    <div class="research-info">
+        <div class="research-info-text">
+            <p> [ {{ presentation.where }} ] </p>
+        </div>
+        <div class="research-info-img">
+            <span style="font-size: 0.8rem;"><a href="{{ presentation.url }}"> {{ presentation.icon }} Go to {{ presentation.kind }} {{ presentation.icon }}</a> </span>
+            <a href="{{ presentation.url }}">
+                <img src="{{ presentation.img }}" alt="alternatetext">
+            </a>
+        </div>
+        <div class="citation-container">
+            <p>
+                {{ presentation.abstract }}
+            </p>
+        </div>
+    </div>
+    {% if not loop.last %}
+        <div class='divider'></div>
+    {% endif %}
+{% endfor %}
+{% endblock %}

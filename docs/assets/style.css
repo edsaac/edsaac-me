@@ -158,6 +158,15 @@ div.research-info div.research-info-img {
 
 }
 
+div.research-info div.research-info-img {
+    opacity: 0.90;
+    transition: .25s ease;
+}
+
+div.research-info div.research-info-img:hover {
+    opacity: 1.0;
+}
+
 div.research-info div.research-info-img img {
     width: 90%;
 }
