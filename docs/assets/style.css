@@ -130,10 +130,10 @@ div.content {
     padding-right: 2rem;
     max-width: 42rem;
     min-width: min(42rem, 100%);
+}
 
-    small {
-        font-size: 0.8rem;
-    }
+div.content small {
+    font-size: 0.8rem;
 }
 
 code {
@@ -171,8 +171,24 @@ div.research-info div.research-info-img img {
     width: 90%;
 }
 
+div.research-info div.research-info-img span.presentation-link {
+    font-size: 0.8rem;
+}
+
+div.research-info div.research-info-img span.presentation-link:hover {
+    font-weight: bold;
+}
+
 div.research-info div.citation-container {
     font-size: 0.70rem;
+}
+
+div.research-info div.abstract-container p {
+    font-size: 0.85rem;
+}
+
+div.research-info div.abstract-container span.abstract-link:hover {
+    font-weight: bold;
 }
 
 div.research-info div.citation-container:hover {

@@ -11,16 +11,20 @@
             <p> [ {{ presentation.where }} ] </p>
         </div>
         <div class="research-info-img">
-            <span style="font-size: 0.8rem;"><a href="{{ presentation.url }}"> {{ presentation.icon }} Go to {{ presentation.kind }} {{ presentation.icon }}</a> </span>
-            <a href="{{ presentation.url }}">
+            <span class="presentation-link"><a href="{{ presentation.url }}" target="_blank"> {{ presentation.icon }} Go to {{ presentation.kind }} {{ presentation.icon }}</a> </span>
+            <a href="{{ presentation.url }}" target="_blank">
                 <img src="{{ presentation.img }}" alt="alternatetext">
             </a>
         </div>
-        <div class="citation-container">
+        <div class="abstract-container">
             <p>
+            {% if presentation.abstract_url %}
+                <span class="abstract-link"><a href="{{ presentation.abstract_url }}"> <em>[Read abstract] </em></a></span>
+            {% endif %}
                 {{ presentation.abstract }}
             </p>
         </div>
+        &nbsp;
     </div>
     {% if not loop.last %}
         <div class='divider'></div>
