@@ -230,3 +230,7 @@ div.course-info div.badge-container img.badge {
     padding-right: 0.5rem;
     border: none;
 }
+
+div.repo-description iframe {
+    border: none;
+}
