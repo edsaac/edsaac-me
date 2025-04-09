@@ -16,6 +16,20 @@ footer {
     border-bottom: #399 solid 1.5rem;
 }
 
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    /* Space between icons */
+}
+
+.social-links a img {
+    height: 1.5rem;
+    /* Icon width */
+    height: auto;
+}
+
 body {
     min-height: 100vh;
     font-family: monospace;
