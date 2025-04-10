@@ -5,7 +5,11 @@
         {{ course.name }}
     </h2>
     {% for lesson in course.lessons %}
-        <h3> > {{ lesson.title }} </h3>
+        <h3 id="{{ lesson.id }}">
+            <a href="{{ lesson.source_code }}">
+                > {{ lesson.title }}
+            </a>
+        </h3>
         <div class="course-info">
             <div class="course-info-img">
                 <a href="{{ lesson.web_app }}"> 

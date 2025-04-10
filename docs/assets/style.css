@@ -92,7 +92,7 @@ main h3 {
 }
 
 main h3:hover {
-    transform: scale(1.05, 1.0);
+    transform: scale(1.025, 1.0);
 }
 
 main p {
@@ -255,6 +255,11 @@ div.repo-description iframe {
 }
 
 div.repo-description video {
+    border: 2px transparent;
+    border-radius: 10px;
+}
+
+div.repo-description img {
     border: 2px transparent;
     border-radius: 10px;
 }
