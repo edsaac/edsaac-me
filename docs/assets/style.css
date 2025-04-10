@@ -88,6 +88,11 @@ main h3 {
     font-size: 1.2rem;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
+    transition: transform 0.1s linear;
+}
+
+main h3:hover {
+    transform: scale(1.05, 1.0);
 }
 
 main p {
@@ -247,4 +252,9 @@ div.course-info div.badge-container img.badge {
 
 div.repo-description iframe {
     border: none;
+}
+
+div.repo-description video {
+    border: 2px transparent;
+    border-radius: 10px;
 }
