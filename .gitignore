@@ -20,3 +20,4 @@ Gemfile.lock
 # Jinja experiment
 generate_website.py
 ignore/
+logbook_md/

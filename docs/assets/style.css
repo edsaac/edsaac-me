@@ -97,14 +97,30 @@ main h3:hover {
 
 main p {
     font-size: .95rem;
-    line-height: 1.2em;
+    line-height: 1.45em;
     margin-bottom: 1.2rem;
-
 }
 
 main a {
     color: inherit;
     text-decoration: inherit;
+}
+
+main p a {
+    color: inherit;
+    text-decoration: underline rgba(255, 0, 195, 0.35) dotted 1px;
+    background-color: rgba(255, 0, 195, 0.03);
+}
+
+main ul {
+    list-style-position: inside;
+    font-size: .90rem;
+    line-height: 1.1em;
+    margin-bottom: 1.2rem;
+}
+
+main img {
+    width: 100%;
 }
 
 main div.divider {

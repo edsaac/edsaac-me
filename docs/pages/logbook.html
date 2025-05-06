@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<header>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <title>edsaac.me · Logbook</title>
+    <link rel="icon" type="image/x-icon" href="/assets/img/logo.png">
+    <link rel="stylesheet" href="/assets/style.css">
+    <h1><a href="https://edsaac.me">> edsaac.me</a></h1>
+
+    
+    <!-- KaTeX for rendering equations -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+        integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"
+        integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"
+        integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+        crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // • auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                ],
+                // • rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+    
+</header>
+
+<body>
+    <main>
+        <div class="menu">
+            
+            <div class="menu-item"><a href="/"
+                    class="lnk-menu ">About</a></div>
+            
+            <div class="menu-item"><a href="/pages/code.html"
+                    class="lnk-menu ">Code</a></div>
+            
+            <div class="menu-item"><a href="/pages/teaching.html"
+                    class="lnk-menu ">Teaching</a></div>
+            
+            <div class="menu-item"><a href="/pages/research.html"
+                    class="lnk-menu ">Research</a></div>
+            
+            <div class="menu-item"><a href="/pages/presentations.html"
+                    class="lnk-menu ">Presentations</a></div>
+            
+            <div class="menu-item"><a href="/pages/logbook.html"
+                    class="lnk-menu i-am-here">Logbook</a></div>
+            
+        </div>
+
+        <div class="content">
+            
+
+    <h2 id="adsorption"><small>[5/6/25]</small><br>
+        Non-dimensional analysis of non-linear adsorption through a porous medium
+    </h2>
+    <div class="course-info-text">
+        <p>
+            Deriving non-dimensional parameters from a system of partial differential equations
+               describing reversible adsorption.
+        </p>
+        <p>
+            <h3>Mass balance: adsorption in porous media</h3>
+<p>The mass balance for the adsorption of a contaminant $c$ in a water-saturated porous medium is:</p>
+<p>$$
+\begin{equation}
+    v \dfrac{\partial c}{\partial z} + \dfrac{\partial c}{\partial t} + \rho_p \dfrac{1-n}{n}\dfrac{\partial q}{\partial t} = 0
+\end{equation}
+$$</p>
+<p>Where $c$ is the contaminant concentration in the aqueous phase [M(c)/L³(water)], $q$ is the mass of adsorbed contaminant per adsorbant mass [M(c)/M(s)], $v$ is the pore velocity [L/T], $z$ is depth [L], $t$ is time [T], $\rho_p$ is the mass density of the dry adsorbant [M(s)/L³(s)] and $n$ is the volumetric porosity [L³(water)/L³(bulk)].  Units are tracked in square brakets, where M(c) refers to the mass of contaminant, M(s) is mass of the solid adsorbant, T is time, and L is length. L³(w) indicates volume of water and L³(bulk) is the bulk volume of the porous medium.</p>
+<p>Adsorption kinetics can be described with <strong>non-linear adsorption</strong> and <strong>linear desorption</strong>:</p>
+<p>$$
+    \begin{equation}
+        \dfrac{\partial q}{\partial t} = k_{T} \, c \, (q_m - q) -  k_{rev} \, q
+    \end{equation}
+$$</p>
+<p>Where $q_m$ is the adsorption capacity of the adsorbant [M(c)/M(s)], $k_{T}$ is a second-order adsortion rate [L³(water)/M(c).T] and $k_{rev}$ is a first-order desoprtion rate [1/T]. That equation is usually rewritten with $b = k_{T}/k_{rev}$ to obtain the more common Langmuir isotherm expression:</p>
+<p>$$
+\begin{equation}
+    \dfrac{\partial q}{\partial t} = k_T \left[ c (q_m - q) - \dfrac{1}{b} \, q \right]
+\end{equation}
+$$</p>
+<p>That expression is equivalent to the <a href="https://en.wikipedia.org/wiki/Langmuir_adsorption_model">Langmuir isotherm</a> because, at equilibrium, $\partial q / \partial t = 0$, thus:</p>
+<p>$$\begin{align&ast;}
+    k_T \left[ c (q_m - q) - \dfrac{1}{b} \, q \right] &amp;= 0 \\
+    c \, (q_m - q) - \dfrac{1}{b} \, q &amp;= 0 \\
+    % c \, (q_m - q) &amp;= \dfrac{1}{b} \, q \\
+    b \, c \, (q_m - q) &amp;= q \\
+    % b \, c \, q_m - b \, c \, q &amp;= q \\
+    q + b \, c \, q &amp;= b \, c \, q_m \\
+    % q \, (1 + b \, c) &amp;= b \, c \, q_m \\
+    q &amp;= \dfrac{b \, c \, q_m}{1 + bc}
+\end{align&ast;}
+$$</p>
+<h3>Rewritting equations in terms of a Representative Elementary Volume (REV)</h3>
+<p>To solve these transport equations using OpenFOAM, it is a good idea to rewrite them in terms of bulk volume units. In this case, 
+we can use the following definition:</p>
+<p>$$
+    s = \rho_p (1-n) q
+$$</p>
+<p>Where $s$ is the mass of adsorbed contaminant per bulk volume [M(c)/L³(bulk)]. With this replacement, the transport equations become:</p>
+<p>$$
+    \begin{equation&ast;}
+        n v \dfrac{\partial c}{\partial z} 
+        + n \dfrac{\partial c}{\partial t} 
+        + \dfrac{\partial s}{\partial t} = 0
+    \end{equation&ast;}
+$$</p>
+<p>and</p>
+<p>$$
+\begin{align&ast;}
+    \dfrac{\partial q}{\partial t} &amp;= k_T \left[ c (q_m - q) - \dfrac{1}{b} \, q \right] \\
+    \dfrac{1}{\rho_p (1-n)}\dfrac{\partial s}{\partial t} &amp;= \dfrac{1}{\rho_p (1-n)} k_T \left[ c (s_m - s) - \dfrac{1}{b} \, s \right] \\
+    \dfrac{\partial s}{\partial t} &amp;= k_T \left[ c (s_m - s) - \dfrac{1}{b} \, s \right] \\
+    % \dfrac{\partial s}{\partial t} &amp;= k_T \, c \, (s_m - s) - \dfrac{k_T}{b} \, s  \\
+    \dfrac{\partial s}{\partial t} &amp;= k_T \, c \, s_m \left(1 - \dfrac{s}{s_m}\right) - \dfrac{k_T}{b} \, s  \\
+    \dfrac{\partial s}{\partial t} &amp;= n \, k_{ads} \, c \left(1 - \dfrac{s}{s_m}\right) - k_{des} \, s
+\end{align&ast;}
+$$</p>
+<p>With the parameters defined above, we obtain a system of partial differential equations that can be coded in OpenFOAM:</p>
+<p>$$
+\begin{equation}
+\left\{
+    \begin{align&ast;}
+        n v \dfrac{\partial c}{\partial z} + n \dfrac{\partial c}{\partial t} &amp;= - n \, k_{ads} \, c \left(1 - \dfrac{s}{s_m}\right) + k_{des} \, s
+        \\[1.5em]
+        \dfrac{\partial s}{\partial t} &amp;= n \,k_{ads} \, c \left(1 - \dfrac{s}{s_m}\right) - k_{des} \, s
+    \end{align&ast;}
+\right.
+\end{equation}
+$$</p>
+<h3>Parameter conversion</h3>
+<p>In the Thomas model:</p>
+<ul>
+<li>$k_{T}$ is the adsorption rate constant [L³(w)/M(c).T]</li>
+<li>$q_{m}$ is the adsorption capacity [M(c)/M(s)]</li>
+<li>$b$ is the adsorption efficiency [L³(w)/M(c)]</li>
+</ul>
+<p>The equivalent parameters in OpenFOAM are:</p>
+<ul>
+<li>$s_{m}$, the adsorption capacity [M(c)/L³(bulk)]</li>
+</ul>
+<p>$$
+    \begin{equation&ast;}
+        s_{m} = \rho_{p} (1 - n) q_{m}
+    \end{equation&ast;}
+$$</p>
+<ul>
+<li>$k_{ads}$, the adsorption rate constant [1/T]</li>
+</ul>
+<p>$$
+    \begin{equation&ast;}
+        k_{ads} = \dfrac{k_T \, \rho_{p} (1 - n) q_{m}}{n} = \dfrac{k_T \, s_m}{n}
+    \end{equation&ast;}
+$$</p>
+<ul>
+<li>$k_{des}$, the desorption rate constant [1/T]</li>
+</ul>
+<p>$$
+    \begin{equation&ast;}
+        k_{des} = \dfrac{k_T}{b}
+    \end{equation&ast;}
+$$</p>
+<h3>Nondimensional analysis</h3>
+<p>Starting with the mass balance equations:</p>
+<p>$$
+\left\{
+        \begin{align&ast;}
+            n v \dfrac{\partial c}{\partial z} + n \dfrac{\partial c}{\partial t} = - n \, k_{ads} \, c \left(1 - \dfrac{s}{s_m}\right) + k_{des} \, s
+            \\
+            \dfrac{\partial s}{\partial t} = n \,k_{ads} \, c \left(1 - \dfrac{s}{s_m}\right) - k_{des} \, s
+        \end{align&ast;}
+    \right.
+$$</p>
+<p>Let's define the non-dimensionalization based on a column experiment parameters:</p>
+<ul>
+<li>$z = \hat{z} \, L$, where $L$ is the column length</li>
+<li>$t = \hat{t} / k_{ads}$, where $k_{ads}$ is the adsorption rate constant</li>
+<li>$c = \hat{c} \, C_0$, where $C_0$ is the influent concentration</li>
+<li>$s = \hat{s} \, s_m$ where $s_{m}$ is the adsorption capacity</li>
+</ul>
+<p>Replacing those in the mass balance equations:</p>
+<p>$$
+    \left\{
+        \begin{align&ast;}
+            \dfrac{n \, v \, C_0}{L} \dfrac{\partial \hat{c}}{\partial \hat{z}} 
+            + (n \, C_0 \, k_{ads}) \dfrac{\partial \hat{c}}{\partial \hat{t}} 
+            = 
+            - n \, k_{ads} \, C_0 \, \hat{c} \left(1 - \hat{s}\right) 
+            + k_{des} \, s_m \, \hat{s}
+            \\
+            \left(s_m \, k_{ads}\right)\dfrac{\partial \hat{s}}{\partial \hat{t}} 
+            = 
+            n \,k_{ads} \, C_0 \, \hat{c} \left(1 - \hat{s}\right) - k_{des} \, s_m \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$</p>
+<p>Dividing both sides by $n \, C_0 \, k_{ads}$ in the top equation, and by $s_m \, k_{ads}$ in the bottom equation:</p>
+<p>$$
+    \left\{
+        \begin{align&ast;}
+            \dfrac{v}{L \, k_{ads}} \dfrac{\partial \hat{c}}{\partial \hat{z}} 
+            + \dfrac{\partial \hat{c}}{\partial \hat{t}} 
+            &amp;= 
+            - \hat{c} \left(1 - \hat{s}\right) 
+            + \dfrac{k_{des} \, s_m}{n \, C_0 \, k_{ads}} \, \hat{s}
+            \\
+            \dfrac{\partial \hat{s}}{\partial \hat{t}} 
+            &amp;= 
+            \dfrac{n \, C_0}{s_m}\, \hat{c} \left(1 - \hat{s}\right) - \dfrac{k_{des}}{k_{ads}} \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$</p>
+<p>From these transformation, the following non-dimensional parameters arise:</p>
+<p>$$
+\begin{align}
+    \pi_1 &amp;= \dfrac{v}{L \, k_{ads}} \\[1.5em]
+    \pi_2 &amp;= \dfrac{k_{des} \, s_m}{n \, C_0 \, k_{ads}} \\[1.5em]
+    \pi_3 &amp;= \dfrac{n \, C_0}{s_m} \\[1.5em]
+    \pi_4 &amp;= \dfrac{k_{des}}{k_{ads}} \\[1.5em]
+\end{align}
+$$</p>
+<p>$\pi_1$ is the inverse of the <a href="https://en.wikipedia.org/wiki/Damk%C3%B6hler_numbers">Damköhler number</a> relating reaction and advection rate. $\pi_2$ condenses the three Thomas model parameters. $\pi_3$ compares the initial concentration to the adsorption capacity. $\pi_4$ compares the desorption and adorption rates directly. </p>
+<p>The system of PDE becomes:</p>
+<p>$$
+    \left\{
+        \begin{align&ast;}
+            \pi_1 \dfrac{\partial \hat{c}}{\partial \hat{z}} 
+            + \dfrac{\partial \hat{c}}{\partial \hat{t}} 
+            &amp;= 
+            - \hat{c} \left(1 - \hat{s}\right) 
+            + \pi_2 \, \hat{s}
+            \\
+            \dfrac{\partial \hat{s}}{\partial \hat{t}} 
+            &amp;= 
+            \pi_3 \, \hat{c} \left(1 - \hat{s}\right) - \pi_4 \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$</p>
+<p>Notice that</p>
+<p>$$
+    \pi_2 = \dfrac{\pi_4}{\pi_3}
+$$</p>
+<p>So, replacing we obtain:</p>
+<p>$$
+    \left\{
+        \begin{align&ast;}
+            \pi_1 \dfrac{\partial \hat{c}}{\partial \hat{z}} 
+            + \dfrac{\partial \hat{c}}{\partial \hat{t}} 
+            &amp;= 
+            - \hat{c} \left(1 - \hat{s}\right) 
+            + \dfrac{\pi_4}{\pi_3} \, \hat{s}
+            \\
+            \dfrac{\partial \hat{s}}{\partial \hat{t}} 
+            &amp;= 
+            \pi_3 \, \hat{c} \left(1 - \hat{s}\right) - \pi_4 \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$</p>
+<p>Or, </p>
+<p>$$
+    \begin{align&ast;}
+        \pi_1 \dfrac{\partial \hat{c}}{\partial \hat{z}} 
+        + \dfrac{\partial \hat{c}}{\partial \hat{t}} 
+        &amp;= 
+        - \dfrac{1}{\pi_3}\dfrac{\partial \hat{s}}{\partial \hat{t}}
+    \end{align&ast;}
+$$</p>
+<p><strong>What if...</strong></p>
+<p>In the case of $\pi_1 \to 0$ , the rate of adsorption is much faster than the advection rate. In that case, the column experiment approximates a chemostat simulation.</p>
+<p>If $\pi_2 = 1$, $\pi_3 = \pi_4$ and desorption and adsoprtion are equally important. In that case, $k_{des} \, s_m = n \, C_0 \, k_{ads}$. If $\pi_2 \gt 1$, $\pi_4 \gt \pi_3$ and desorption dominates. Conversely, if $\pi_2 \lt 1$, $\pi_4 \lt \pi_3$ and adsorption dominates.</p>
+<p><strong>Returning to Thomas parameters</strong></p>
+<p>If we replaced with the original Thomas model parameters, we get:</p>
+<p>$$
+    \begin{array}{c|c|c}
+        \textsf{Non-dimensional} &amp;
+        \textsf{pfasFOAM} &amp;
+        \textsf{Thomas model}
+        \\
+        \hline
+        \\
+        \pi_1 &amp;
+        \dfrac{v}{L \, k_{ads}} &amp;
+        \dfrac{n \, v}{L \, k_T \, \rho_p (1-n) \, q_m}
+        \\[1.5em]
+        \hline
+        \\
+        \pi_2 &amp;
+        \dfrac{k_{des} \, s_m}{n \, C_0 \, k_{ads}} &amp;
+        \dfrac{1}{C_0 \, b}
+        \\[1.5em]
+        \hline
+        \\
+        \pi_3 &amp;
+        \dfrac{n \, C_0}{s_m} &amp;
+        \dfrac{n \, C_0}{\rho_p \, (1-n) \, q_m}
+        \\[1.5em]
+        \hline
+        \\
+        \pi_4 &amp;
+        \dfrac{k_{des}}{k_{ads}} &amp;
+        \dfrac{n}{b \, s_m}
+    \end{array}
+$$</p>
+<h2>Toy simulation</h2>
+<p>Consider the case where $\pi_1 \to 0$. The system of equations simplifies to:</p>
+<p>$$
+    \left\{
+        \begin{align&ast;}
+            \dfrac{d \hat{c}}{d \hat{t}} 
+            &amp;= 
+            - \hat{c} \left(1 - \hat{s}\right) 
+            + \dfrac{\pi_4}{\pi_3} \, \hat{s}
+            \\
+            \dfrac{d \hat{s}}{d \hat{t}} 
+            &amp;= 
+            \pi_3 \, \hat{c} \left(1 - \hat{s}\right) - \pi_4 \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$</p>
+<p><strong>Steady state and interesting $(\hat{c}, \hat{s})$ points</strong></p>
+<p>A trivial steady state is found at $(0,0)$. A non-trivial steady-state follows the line defined by </p>
+<p>$$
+    \left(-\dfrac{\pi_4}{\pi_3} \dfrac{\hat{s}}{(\hat{s} - 1)}, \; \hat{s}\right)
+$$</p>
+<p>The following phase diagrams are obtained for this dynamical system varying values for $\pi_3$ and $\pi_4$. </p>
+<p><a href="/assets/img/logbook/phase_diagram_1.svg"><img alt="Phase diagram" src="/assets/img/logbook/phase_diagram_1.svg" title="Phase diagram varying π3 and π4, constant π2" /></a></p>
+        </p>
+    </div>
+    
+
+
+        </div>
+    </main>
+    <footer>
+    </footer>
+</body>

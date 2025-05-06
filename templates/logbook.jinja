@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+{% for entry in logbook %}
+    <h2 id="{{ entry.id }}"><small>[{{ entry.date }}]</small><br>
+        {{ entry.title }}
+    </h2>
+    <div class="course-info-text">
+        <p>
+            {{ entry.abstract }}
+        </p>
+        <p>
+            {{ entry.contents }}
+        </p>
+    </div>
+    {% if not loop.last %}
+        <p style="text-align: right;">⁂</p>
+    {% endif %}
+{% endfor %}
+{% endblock %}
