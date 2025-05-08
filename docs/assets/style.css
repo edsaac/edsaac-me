@@ -68,6 +68,7 @@ main {
     align-items: center;
     flex-direction: column;
     justify-content: top;
+    overflow: hidden;
 }
 
 main h1 {
@@ -121,6 +122,8 @@ main ul {
 
 main img {
     width: 100%;
+    max-width: 42rem;
+    min-width: min(42rem, 100%);
 }
 
 main div.divider {
@@ -278,4 +281,14 @@ div.repo-description video {
 div.repo-description img {
     border: 2px transparent;
     border-radius: 10px;
+}
+
+.katex-display>.katex {
+    max-width: 85vw;
+    overflow-x: scroll;
+    overflow-y: clip;
+}
+
+.katex-display>.katex .katex-html {
+    width: 95%;
 }
