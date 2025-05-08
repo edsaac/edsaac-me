@@ -1,17 +1,27 @@
-{% extends "base.html" %}
+{% extends "base.jinja" %}
 {% block content %}
 {% for entry in logbook %}
-    <h2 id="{{ entry.id }}"><small>[{{ entry.date }}]</small><br>
+    {% if loop.first %}
+    <details open id="{{ entry.id }}">
+    {% else %}
+    <details id="{{ entry.id }}">
+    {%- endif %}
+
+    <summary><small>[{{ entry.date }}]</small><br>
+    <h2>
         {{ entry.title }}
     </h2>
+    <p>
+        {{ entry.abstract }}
+    </p>
+    </summary>
     <div class="course-info-text">
-        <p>
-            {{ entry.abstract }}
-        </p>
+
         <p>
             {{ entry.contents }}
         </p>
     </div>
+    </details>
     {% if not loop.last %}
         <p style="text-align: right;">⁂</p>
     {% endif %}
