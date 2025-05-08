@@ -287,6 +287,8 @@ div.repo-description img {
     max-width: 85vw;
     overflow-x: scroll;
     overflow-y: clip;
+    padding-top: 0.15rem;
+    padding-bottom: 0.1em;
 }
 
 .katex-display>.katex .katex-html {
