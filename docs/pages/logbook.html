@@ -81,267 +81,943 @@
 <p>The mass balance for the adsorption of a contaminant $c$ in a water-saturated porous medium is:</p>
 <p>$$
 \begin{equation}
-    v \dfrac{\partial c}{\partial z} + \dfrac{\partial c}{\partial t} + \rho_p \dfrac{1-n}{n}\dfrac{\partial q}{\partial t} = 0
+    \mathsf{v} \, \dfrac{\partial c}{\partial z} + \dfrac{\partial c}{\partial t} + \rho&#95;p \dfrac{1-n}{n}\dfrac{\partial q}{\partial t} = 0
 \end{equation}
 $$</p>
-<p>Where $c$ is the contaminant concentration in the aqueous phase [M(c)/L³(water)], $q$ is the mass of adsorbed contaminant per adsorbant mass [M(c)/M(s)], $v$ is the pore velocity [L/T], $z$ is depth [L], $t$ is time [T], $\rho_p$ is the mass density of the dry adsorbant [M(s)/L³(s)] and $n$ is the volumetric porosity [L³(water)/L³(bulk)].  Units are tracked in square brakets, where M(c) refers to the mass of contaminant, M(s) is mass of the solid adsorbant, T is time, and L is length. L³(w) indicates volume of water and L³(bulk) is the bulk volume of the porous medium.</p>
+<p>Where $c$ is the contaminant concentration in the aqueous phase [M(c)/L³(water)], $q$ is the mass of adsorbed contaminant per adsorbant mass [M(c)/M(s)], $v$ is the pore velocity [L/T], $z$ is depth [L], $t$ is time [T], $\rho&#95;p$ is the mass density of the dry adsorbant [M(s)/L³(s)] and $n$ is the volumetric porosity [L³(water)/L³(bulk)].  Units are tracked in square brakets, where M(c) refers to the mass of contaminant, M(s) is mass of the solid adsorbant, T is time, and L is length. L³(w) indicates volume of water and L³(bulk) is the bulk volume of the porous medium.</p>
 <p>Adsorption kinetics can be described with <strong>non-linear adsorption</strong> and <strong>linear desorption</strong>:</p>
 <p>$$
     \begin{equation}
-        \dfrac{\partial q}{\partial t} = k_{T} \, c \, (q_m - q) -  k_{rev} \, q
+        \dfrac{\partial q}{\partial t} = k&#95;{T} \, c \, (q&#95;m - q) -  k&#95;{rev} \, q
     \end{equation}
 $$</p>
-<p>Where $q_m$ is the adsorption capacity of the adsorbant [M(c)/M(s)], $k_{T}$ is a second-order adsortion rate [L³(water)/M(c).T] and $k_{rev}$ is a first-order desoprtion rate [1/T]. That equation is usually rewritten with $b = k_{T}/k_{rev}$ to obtain the more common Langmuir isotherm expression:</p>
+<p>Where $q&#95;m$ is the adsorption capacity of the adsorbant [M(c)/M(s)], $k&#95;{T}$ is a second-order adsortion rate [L³(water)/M(c).T] and $k&#95;{rev}$ is a first-order desoprtion rate [1/T]. That equation is usually rewritten with $b = k&#95;{T}/k&#95;{rev}$ to obtain the more common Langmuir isotherm expression:</p>
 <p>$$
 \begin{equation}
-    \dfrac{\partial q}{\partial t} = k_T \left[ c (q_m - q) - \dfrac{1}{b} \, q \right]
+    \dfrac{\partial q}{\partial t} = k&#95;T \left[ c \, (q&#95;m - q) - \dfrac{1}{b} \, q \right]
 \end{equation}
 $$</p>
-<p>That expression is equivalent to the <a href="https://en.wikipedia.org/wiki/Langmuir_adsorption_model">Langmuir isotherm</a> because, at equilibrium, $\partial q / \partial t = 0$, thus:</p>
+<h4>The Langmuir isotherm</h4>
+<p>That expression is equivalent to the <a href="https://en.wikipedia.org/wiki/Langmuir&#95;adsorption&#95;model">Langmuir isotherm</a> because, at equilibrium, $\partial q / \partial t = 0$, thus:</p>
 <p>$$\begin{align&ast;}
-    k_T \left[ c (q_m - q) - \dfrac{1}{b} \, q \right] &amp;= 0 \\
-    c \, (q_m - q) - \dfrac{1}{b} \, q &amp;= 0 \\
-    % c \, (q_m - q) &amp;= \dfrac{1}{b} \, q \\
-    b \, c \, (q_m - q) &amp;= q \\
-    % b \, c \, q_m - b \, c \, q &amp;= q \\
-    q + b \, c \, q &amp;= b \, c \, q_m \\
-    % q \, (1 + b \, c) &amp;= b \, c \, q_m \\
-    q &amp;= \dfrac{b \, c \, q_m}{1 + bc}
+    k&#95;T \left[ c (q&#95;m - q) - \dfrac{1}{b} \, q \right] &amp;= 0 \\
+    c \, (q&#95;m - q) - \dfrac{1}{b} \, q &amp;= 0 \\
+    % c \, (q&#95;m - q) &amp;= \dfrac{1}{b} \, q \\
+    b \, c \, (q&#95;m - q) &amp;= q \\
+    % b \, c \, q&#95;m - b \, c \, q &amp;= q \\
+    q + b \, c \, q &amp;= b \, c \, q&#95;m \\
+    % q \, (1 + b \, c) &amp;= b \, c \, q&#95;m \\
+    q &amp;= \dfrac{b \, c \, q&#95;m}{1 + b \, c}
 \end{align&ast;}
 $$</p>
 <h3>Rewritting equations in terms of a Representative Elementary Volume (REV)</h3>
-<p>To solve these transport equations using OpenFOAM, it is a good idea to rewrite them in terms of bulk volume units. In this case, 
-we can use the following definition:</p>
+<p>To solve these transport equations numerically, it is a good idea to rewrite them in terms of bulk volume units. We simply need to use the following definition:</p>
 <p>$$
-    s = \rho_p (1-n) q
+    s = \rho&#95;p \, (1-n) \, q
 $$</p>
 <p>Where $s$ is the mass of adsorbed contaminant per bulk volume [M(c)/L³(bulk)]. With this replacement, the transport equations become:</p>
 <p>$$
     \begin{equation&ast;}
-        n v \dfrac{\partial c}{\partial z} 
-        + n \dfrac{\partial c}{\partial t} 
+        n \, \mathsf{v} \, \dfrac{\partial c}{\partial z}
+        + n \dfrac{\partial c}{\partial t}
         + \dfrac{\partial s}{\partial t} = 0
     \end{equation&ast;}
 $$</p>
 <p>and</p>
 <p>$$
 \begin{align&ast;}
-    \dfrac{\partial q}{\partial t} &amp;= k_T \left[ c (q_m - q) - \dfrac{1}{b} \, q \right] \\
-    \dfrac{1}{\rho_p (1-n)}\dfrac{\partial s}{\partial t} &amp;= \dfrac{1}{\rho_p (1-n)} k_T \left[ c (s_m - s) - \dfrac{1}{b} \, s \right] \\
-    \dfrac{\partial s}{\partial t} &amp;= k_T \left[ c (s_m - s) - \dfrac{1}{b} \, s \right] \\
-    % \dfrac{\partial s}{\partial t} &amp;= k_T \, c \, (s_m - s) - \dfrac{k_T}{b} \, s  \\
-    \dfrac{\partial s}{\partial t} &amp;= k_T \, c \, s_m \left(1 - \dfrac{s}{s_m}\right) - \dfrac{k_T}{b} \, s  \\
-    \dfrac{\partial s}{\partial t} &amp;= n \, k_{ads} \, c \left(1 - \dfrac{s}{s_m}\right) - k_{des} \, s
+    \dfrac{\partial q}{\partial t} &amp;= k&#95;T \left[ c (q&#95;m - q) - \dfrac{1}{b} \, q \right] \\[1.2em]
+    \dfrac{1}{\rho&#95;p (1-n)}\dfrac{\partial s}{\partial t} &amp;= \dfrac{1}{\rho&#95;p (1-n)} k&#95;T \left[ c (s&#95;m - s) - \dfrac{1}{b} \, s \right] \\
+    \dfrac{\partial s}{\partial t} &amp;= k&#95;T \left[ c (s&#95;m - s) - \dfrac{1}{b} \, s \right] \\[1.2em]
+    % \dfrac{\partial s}{\partial t} &amp;= k&#95;T \, c \, (s&#95;m - s) - \dfrac{k&#95;T}{b} \, s  \\
+    \dfrac{\partial s}{\partial t} &amp;= \underbrace{k&#95;T \, s&#95;m}&#95;{n \, k&#95;{ads}} \, c \left(1 - \dfrac{s}{s&#95;m}\right) - \underbrace{\dfrac{k&#95;T}{b}}&#95;{k&#95;{des}} \, s  \\[2em]
+    \dfrac{\partial s}{\partial t} &amp;= n \, k&#95;{ads} \, c \left(1 - \dfrac{s}{s&#95;m}\right) - k&#95;{des} \, s
 \end{align&ast;}
 $$</p>
-<p>With the parameters defined above, we obtain a system of partial differential equations that can be coded in OpenFOAM:</p>
+<p>In the last line, we condensed the parameters into simple rate terms with [1/T] units. With this replacement, the transport equations become:</p>
 <p>$$
 \begin{equation}
 \left\{
     \begin{align&ast;}
-        n v \dfrac{\partial c}{\partial z} + n \dfrac{\partial c}{\partial t} &amp;= - n \, k_{ads} \, c \left(1 - \dfrac{s}{s_m}\right) + k_{des} \, s
+        n \, \mathsf{v} \, \dfrac{\partial c}{\partial z} + n \dfrac{\partial c}{\partial t} &amp;= - n \, k&#95;{ads} \, c \left(1 - \dfrac{s}{s&#95;m}\right) + k&#95;{des} \, s
         \\[1.5em]
-        \dfrac{\partial s}{\partial t} &amp;= n \,k_{ads} \, c \left(1 - \dfrac{s}{s_m}\right) - k_{des} \, s
+        \dfrac{\partial s}{\partial t} &amp;= n \,k&#95;{ads} \, c \left(1 - \dfrac{s}{s&#95;m}\right) - k&#95;{des} \, s
     \end{align&ast;}
 \right.
 \end{equation}
 $$</p>
-<h3>Parameter conversion</h3>
+<h4>Parameter conversion summary</h4>
+<p>$$
+\begin{equation&ast;}
+    \begin{array}{c|c|c}
+        \textsf{Parameter} &amp; \textsf{REV} &amp; \textsf{Thomas} \\
+        \hline
+        \\[-0.8em]
+        \begin{array}{c}
+            \textsf{\small{Adsorption}}\\[1em]
+            \textsf{\small{Capacity}}\\[1em]
+            \textsf{\small{Desorption}}
+        \end{array}
+        &amp;
+        \begin{array}{c}
+            k&#95;{ads}\\[1em]s&#95;{m}\\[1em]k&#95;{des}
+        \end{array}
+        &amp;
+        \begin{array}{c}
+            k&#95;{T}\\[1em]q&#95;{m}\\[1em]b
+        \end{array}
+    \end{array}
+\end{equation&ast;}
+$$</p>
 <p>In the Thomas model:</p>
 <ul>
-<li>$k_{T}$ is the adsorption rate constant [L³(w)/M(c).T]</li>
-<li>$q_{m}$ is the adsorption capacity [M(c)/M(s)]</li>
+<li>$k&#95;{T}$ is the adsorption rate constant [L³(w)/M(c).T]</li>
+<li>$q&#95;{m}$ is the adsorption capacity [M(c)/M(s)]</li>
 <li>$b$ is the adsorption efficiency [L³(w)/M(c)]</li>
 </ul>
-<p>The equivalent parameters in OpenFOAM are:</p>
+<p>The equivalent parameters in terms of REV are:</p>
 <ul>
-<li>$s_{m}$, the adsorption capacity [M(c)/L³(bulk)]</li>
+<li>$s&#95;{m}$, the adsorption capacity [M(c)/L³(bulk)]</li>
 </ul>
 <p>$$
     \begin{equation&ast;}
-        s_{m} = \rho_{p} (1 - n) q_{m}
+        s&#95;{m} = \rho&#95;{p} \, (1 - n) \, q&#95;{m}
     \end{equation&ast;}
 $$</p>
 <ul>
-<li>$k_{ads}$, the adsorption rate constant [1/T]</li>
+<li>$k&#95;{ads}$, the adsorption rate constant [1/T]</li>
 </ul>
 <p>$$
     \begin{equation&ast;}
-        k_{ads} = \dfrac{k_T \, \rho_{p} (1 - n) q_{m}}{n} = \dfrac{k_T \, s_m}{n}
+        k&#95;{ads} = \dfrac{k&#95;T \, \rho&#95;{p} \, (1 - n) \, q&#95;{m}}{n} = \dfrac{k&#95;T \, s&#95;m}{n}
     \end{equation&ast;}
 $$</p>
 <ul>
-<li>$k_{des}$, the desorption rate constant [1/T]</li>
+<li>$k&#95;{des}$, the desorption rate constant [1/T]</li>
 </ul>
 <p>$$
     \begin{equation&ast;}
-        k_{des} = \dfrac{k_T}{b}
+        k&#95;{des} = \dfrac{k&#95;T}{b}
     \end{equation&ast;}
 $$</p>
 <h3>Nondimensional analysis</h3>
-<p>Starting with the mass balance equations:</p>
-<p>$$
-\left\{
+<p>Let's define the non-dimensionalization based on characteristics of a column experiment:</p>
+<!-- $$
+\left\\{
         \begin{align&ast;}
-            n v \dfrac{\partial c}{\partial z} + n \dfrac{\partial c}{\partial t} = - n \, k_{ads} \, c \left(1 - \dfrac{s}{s_m}\right) + k_{des} \, s
-            \\
-            \dfrac{\partial s}{\partial t} = n \,k_{ads} \, c \left(1 - \dfrac{s}{s_m}\right) - k_{des} \, s
+            n \mathsf{v} \dfrac{\partial c}{\partial z}
+            + n \dfrac{\partial c}{\partial t} = - n \, k&#95;{ads} \, c \left(1 - \dfrac{s}{s&#95;m}\right) + k&#95;{des} \, s
+            \\\\[1.2em]
+            \dfrac{\partial s}{\partial t} = n \,k&#95;{ads} \, c \left(1 - \dfrac{s}{s&#95;m}\right) - k&#95;{des} \, s
         \end{align&ast;}
     \right.
-$$</p>
-<p>Let's define the non-dimensionalization based on a column experiment parameters:</p>
+$$ -->
+
 <ul>
 <li>$z = \hat{z} \, L$, where $L$ is the column length</li>
-<li>$t = \hat{t} / k_{ads}$, where $k_{ads}$ is the adsorption rate constant</li>
-<li>$c = \hat{c} \, C_0$, where $C_0$ is the influent concentration</li>
-<li>$s = \hat{s} \, s_m$ where $s_{m}$ is the adsorption capacity</li>
+<li>$t = \hat{t} \, L / \mathsf{v}$, where $\mathsf{v}$ is the pore water velocity</li>
+<li>$c = \hat{c} \, C&#95;0$, where $C&#95;0$ is the influent concentration</li>
+<li>$s = \hat{s} \, s&#95;m$ where $s&#95;{m}$ is the adsorption capacity</li>
 </ul>
-<p>Replacing those in the mass balance equations:</p>
+<p>Replacing these definitions in the mass balance equations from Eq. 4:</p>
 <p>$$
     \left\{
         \begin{align&ast;}
-            \dfrac{n \, v \, C_0}{L} \dfrac{\partial \hat{c}}{\partial \hat{z}} 
-            + (n \, C_0 \, k_{ads}) \dfrac{\partial \hat{c}}{\partial \hat{t}} 
-            = 
-            - n \, k_{ads} \, C_0 \, \hat{c} \left(1 - \hat{s}\right) 
-            + k_{des} \, s_m \, \hat{s}
-            \\
-            \left(s_m \, k_{ads}\right)\dfrac{\partial \hat{s}}{\partial \hat{t}} 
-            = 
-            n \,k_{ads} \, C_0 \, \hat{c} \left(1 - \hat{s}\right) - k_{des} \, s_m \, \hat{s}
+            \dfrac{n \, \mathsf{v} \, C&#95;0}{L} \dfrac{\partial \hat{c}}{\partial \hat{z}}
+            + \dfrac{n \, \mathsf{v} \, C&#95;0}{L} \dfrac{\partial \hat{c}}{\partial \hat{t}}
+            =
+            - n \, k&#95;{ads} \, C&#95;0 \, \hat{c} \left(1 - \hat{s}\right)
+            + k&#95;{des} \, s&#95;m \, \hat{s}
+            \\[1.2em]
+            \dfrac{n \, \mathsf{v} \, s&#95;m}{L}\dfrac{\partial \hat{s}}{\partial \hat{t}}
+            =
+            n \,k&#95;{ads} \, C&#95;0 \, \hat{c} \left(1 - \hat{s}\right) - k&#95;{des} \, s&#95;m \, \hat{s}
         \end{align&ast;}
     \right.
 $$</p>
-<p>Dividing both sides by $n \, C_0 \, k_{ads}$ in the top equation, and by $s_m \, k_{ads}$ in the bottom equation:</p>
+<p>Simplifying,</p>
 <p>$$
     \left\{
         \begin{align&ast;}
-            \dfrac{v}{L \, k_{ads}} \dfrac{\partial \hat{c}}{\partial \hat{z}} 
-            + \dfrac{\partial \hat{c}}{\partial \hat{t}} 
-            &amp;= 
-            - \hat{c} \left(1 - \hat{s}\right) 
-            + \dfrac{k_{des} \, s_m}{n \, C_0 \, k_{ads}} \, \hat{s}
-            \\
-            \dfrac{\partial \hat{s}}{\partial \hat{t}} 
-            &amp;= 
-            \dfrac{n \, C_0}{s_m}\, \hat{c} \left(1 - \hat{s}\right) - \dfrac{k_{des}}{k_{ads}} \, \hat{s}
+            \dfrac{\partial \hat{c}}{\partial \hat{z}}
+            + \dfrac{\partial \hat{c}}{\partial \hat{t}}
+            &amp;=
+            - \underbrace{\dfrac{k&#95;{ads} L}{\mathsf{v}}}&#95;{p&#95;1} \, \hat{c} \left(1 - \hat{s}\right)
+            + \underbrace{\dfrac{k&#95;{des} \, s&#95;m \, L}{n \,\mathsf{v} \, C&#95;0}}&#95;{p&#95;2} \, \hat{s}
+            \\[3em]
+            \dfrac{\partial \hat{s}}{\partial \hat{t}}
+            &amp;=
+            \underbrace{\dfrac{n \, k&#95;{ads} \, C&#95;0 \, L}{s&#95;m \, \mathsf{v}}}&#95;{p&#95;3} \, \hat{c} \left(1 - \hat{s}\right)
+            - \underbrace{\dfrac{k&#95;{des} \, L}{\mathsf{v}}}&#95;{p&#95;4} \, \hat{s}
         \end{align&ast;}
     \right.
 $$</p>
 <p>From these transformation, the following non-dimensional parameters arise:</p>
 <p>$$
-\begin{align}
-    \pi_1 &amp;= \dfrac{v}{L \, k_{ads}} \\[1.5em]
-    \pi_2 &amp;= \dfrac{k_{des} \, s_m}{n \, C_0 \, k_{ads}} \\[1.5em]
-    \pi_3 &amp;= \dfrac{n \, C_0}{s_m} \\[1.5em]
-    \pi_4 &amp;= \dfrac{k_{des}}{k_{ads}} \\[1.5em]
-\end{align}
+\begin{align&ast;}
+    p&#95;1 &amp;= \dfrac{k&#95;{ads} L}{\mathsf{v}} = \mathsf{Da}&#95;{ads} \\[1.5em]
+    p&#95;2 &amp;= \dfrac{k&#95;{des} \, s&#95;m \, L}{n \, \mathsf{v} \, C&#95;0}  = \dfrac{\mathsf{Da}&#95;{des}}{\kappa}\\[1.5em]
+    p&#95;3 &amp;= \dfrac{n \, k&#95;{ads} \, C&#95;0 \, L}{\mathsf{v} \, s&#95;m} = \kappa \, \mathsf{Da}&#95;{ads} \\[1.5em]
+    p&#95;4 &amp;= \dfrac{k&#95;{des} \, L}{\mathsf{v}} = \mathsf{Da}&#95;{des}\\[1.5em]
+\end{align&ast;}
 $$</p>
-<p>$\pi_1$ is the inverse of the <a href="https://en.wikipedia.org/wiki/Damk%C3%B6hler_numbers">Damköhler number</a> relating reaction and advection rate. $\pi_2$ condenses the three Thomas model parameters. $\pi_3$ compares the initial concentration to the adsorption capacity. $\pi_4$ compares the desorption and adorption rates directly. </p>
-<p>The system of PDE becomes:</p>
+<p>$p&#95;1$ and $p&#95;4$ are Damköhler numbers ($\mathsf{Da}$), i.e., they are ratios between the adsorption/desorption rates and the advection rate. $\kappa = n\, C&#95;0 / s&#95;m$ is the ratio between the concentration in the aqueous phase and the available adsorption sites. Another useful definition will be $\psi = k&#95;{ads}/k&#95;{des}$. Notice that the four parameters $p&#95;i$ are not completely independent because</p>
 <p>$$
-    \left\{
-        \begin{align&ast;}
-            \pi_1 \dfrac{\partial \hat{c}}{\partial \hat{z}} 
-            + \dfrac{\partial \hat{c}}{\partial \hat{t}} 
-            &amp;= 
-            - \hat{c} \left(1 - \hat{s}\right) 
-            + \pi_2 \, \hat{s}
-            \\
-            \dfrac{\partial \hat{s}}{\partial \hat{t}} 
-            &amp;= 
-            \pi_3 \, \hat{c} \left(1 - \hat{s}\right) - \pi_4 \, \hat{s}
-        \end{align&ast;}
-    \right.
+    \dfrac{p&#95;1}{p&#95;2} =  \dfrac{p&#95;3}{p&#95;4} = \dfrac{n \, k&#95;{ads} \, C&#95;0}{k&#95;{des} \, s&#95;m} = \psi \, \kappa
 $$</p>
-<p>Notice that</p>
+<p>Finally, we can rewrite the equations in terms of the Damköhler numbers and $\kappa$:</p>
 <p>$$
-    \pi_2 = \dfrac{\pi_4}{\pi_3}
-$$</p>
-<p>So, replacing we obtain:</p>
-<p>$$
-    \left\{
-        \begin{align&ast;}
-            \pi_1 \dfrac{\partial \hat{c}}{\partial \hat{z}} 
-            + \dfrac{\partial \hat{c}}{\partial \hat{t}} 
-            &amp;= 
-            - \hat{c} \left(1 - \hat{s}\right) 
-            + \dfrac{\pi_4}{\pi_3} \, \hat{s}
-            \\
-            \dfrac{\partial \hat{s}}{\partial \hat{t}} 
-            &amp;= 
-            \pi_3 \, \hat{c} \left(1 - \hat{s}\right) - \pi_4 \, \hat{s}
-        \end{align&ast;}
-    \right.
-$$</p>
-<p>Or, </p>
-<p>$$
+\begin{equation}
+\left\{
     \begin{align&ast;}
-        \pi_1 \dfrac{\partial \hat{c}}{\partial \hat{z}} 
-        + \dfrac{\partial \hat{c}}{\partial \hat{t}} 
-        &amp;= 
-        - \dfrac{1}{\pi_3}\dfrac{\partial \hat{s}}{\partial \hat{t}}
+        \dfrac{\partial \hat{c}}{\partial \hat{z}}
+        + \dfrac{\partial \hat{c}}{\partial \hat{t}}
+        &amp;=
+        - \mathsf{Da}&#95;{ads} \, \hat{c} \left(1 - \hat{s}\right)
+        + \dfrac{\mathsf{Da}&#95;{des}}{\kappa} \, \hat{s}
+        \\[1.2em]
+        \dfrac{\partial \hat{s}}{\partial \hat{t}}
+        &amp;=
+        \kappa \, \mathsf{Da}&#95;{ads} \, \hat{c} \left(1 - \hat{s}\right)
+        - \mathsf{Da}&#95;{des} \, \hat{s}
     \end{align&ast;}
+\right.
+\end{equation}
 $$</p>
-<p><strong>What if...</strong></p>
-<p>In the case of $\pi_1 \to 0$ , the rate of adsorption is much faster than the advection rate. In that case, the column experiment approximates a chemostat simulation.</p>
-<p>If $\pi_2 = 1$, $\pi_3 = \pi_4$ and desorption and adsoprtion are equally important. In that case, $k_{des} \, s_m = n \, C_0 \, k_{ads}$. If $\pi_2 \gt 1$, $\pi_4 \gt \pi_3$ and desorption dominates. Conversely, if $\pi_2 \lt 1$, $\pi_4 \lt \pi_3$ and adsorption dominates.</p>
+<!-- Or,
+
+$$
+\left\\{
+    \begin{align&ast;}
+        \dfrac{\partial \hat{c}}{\partial \hat{z}}
+        + \dfrac{\partial \hat{c}}{\partial \hat{t}}
+        &=
+        \mathsf{Da}&#95;{ads} \left[
+            - \hat{c} \left(1 - \hat{s}\right)
+            + \dfrac{1}{\psi} \, \hat{s}
+        \right]
+        \\\\[1.2em]
+        \dfrac{\partial \hat{s}}{\partial \hat{t}}
+        &=
+        \mathsf{Da}&#95;{des} \left[ \psi \, \, \hat{c} \left(1 - \hat{s}\right)
+        - \hat{s}
+        \right]
+    \end{align&ast;}
+\right.
+$$ -->
+
 <p><strong>Returning to Thomas parameters</strong></p>
-<p>If we replaced with the original Thomas model parameters, we get:</p>
+<p>If we replaced the definitions of the non-dimensional parameters with the original Thomas model parameters, we get:</p>
 <p>$$
     \begin{array}{c|c|c}
         \textsf{Non-dimensional} &amp;
-        \textsf{pfasFOAM} &amp;
-        \textsf{Thomas model}
+        \textsf{REV} &amp;
+        \textsf{Thomas}
         \\
         \hline
         \\
-        \pi_1 &amp;
-        \dfrac{v}{L \, k_{ads}} &amp;
-        \dfrac{n \, v}{L \, k_T \, \rho_p (1-n) \, q_m}
+        \mathsf{Da}&#95;{ads} &amp;
+        \dfrac{k&#95;{ads} \, L}{\mathsf{v}} &amp;
+        \dfrac{k&#95;T \, \rho&#95;p (1-n) \, q&#95;m \, L}{n \, \mathsf{v}}
         \\[1.5em]
         \hline
         \\
-        \pi_2 &amp;
-        \dfrac{k_{des} \, s_m}{n \, C_0 \, k_{ads}} &amp;
-        \dfrac{1}{C_0 \, b}
+        \mathsf{Da}&#95;{des} &amp;
+        \dfrac{k&#95;{des} \, L}{\mathsf{v}} &amp;
+        \dfrac{k&#95;T \, L}{b \, \mathsf{v}}
         \\[1.5em]
         \hline
         \\
-        \pi_3 &amp;
-        \dfrac{n \, C_0}{s_m} &amp;
-        \dfrac{n \, C_0}{\rho_p \, (1-n) \, q_m}
+        \kappa &amp;
+        \dfrac{n \, C&#95;0}{s&#95;m} &amp;
+        \dfrac{n \, C&#95;0}{\rho&#95;p \, (1 - n) \, q&#95;m}
         \\[1.5em]
         \hline
         \\
-        \pi_4 &amp;
-        \dfrac{k_{des}}{k_{ads}} &amp;
-        \dfrac{n}{b \, s_m}
+        \psi &amp;
+        \dfrac{k&#95;{ads}}{k&#95;{des}} &amp;
+        \dfrac{\rho&#95;p \, (1-n) \, q&#95;m \, b}{n}
+        \\[1.5em]
+        \hline
+        \\[-1em]
+        \hline
+        \\
+        p&#95;2 &amp;
+        \dfrac{k&#95;{des} \, s&#95;m \, L}{n \, \mathsf{v} \, C&#95;0 } &amp;
+        \dfrac{k&#95;T \, \rho&#95;p (1-n) \, q&#95;m \, L}{n \, \mathsf{v} \, C&#95;0 \, b}
+        \\[1.5em]
+        \hline
+        \\
+        p&#95;3 &amp;
+        \dfrac{n \, k&#95;{ads} \, C&#95;0 \, L}{s&#95;m \, \mathsf{v}} &amp;
+        \dfrac{k&#95;T \, C&#95;0 \, L}{\mathsf{v}}
+        \\[1.5em]
+        \hline
+        \\
+        \kappa \,\psi &amp;
+        \dfrac{n \, k&#95;{ads} \, C&#95;0}{k&#95;{des} \, s&#95;m} &amp;
+        \dfrac{1}{C&#95;0 \, b}
     \end{array}
 $$</p>
-<h2>Toy simulation</h2>
-<p>Consider the case where $\pi_1 \to 0$. The system of equations simplifies to:</p>
+<h3>Degenerate cases</h3>
+<h4>Steady-state</h4>
+<p>At a steady-state, $\partial \hat{c} / \partial \hat{t} = \partial \hat{c} / \partial \hat{t} = 0$. Therefore, the system of equations simplifies to:</p>
+<p>$$
+\left\{
+    \begin{align&ast;}
+        \dfrac{\partial \hat{c}}{\partial \hat{z}}
+        &amp;=
+        - \mathsf{Da}&#95;{ads} \, \hat{c} \left(1 - \hat{s}\right)
+        + \dfrac{\mathsf{Da}&#95;{des}}{\kappa} \, \hat{s}
+        \\[1.2em]
+        0
+        &amp;=
+        \kappa \, \mathsf{Da}&#95;{ads} \, \hat{c} \left(1 - \hat{s}\right)
+        - \mathsf{Da}&#95;{des} \, \hat{s}
+    \end{align&ast;}
+\right.
+$$</p>
+<p>In that case, the system of equations has two possible solutions. One is the trivial  solution where $\hat{c} = \hat{s} = 0$. The other solution is not unique, for a given $0 \le \hat{c} \leq 1$, $\hat{s} = \kappa \, \psi \, \hat{c} / (1 + \kappa \, \psi \, \hat{c})$. In both cases, $\partial \hat{c} / \partial \hat{z} = 0$, meaning that, at steady -state, the aqueous phase concentration is a constant over depth.</p>
+<h4>Batch kinetics experiment</h4>
+<p>In a batch experiment, there is no advective term in the first place. This is no longer a system of partial differential equations but a system of ordinary differential equations:</p>
+<p>$$
+\begin{equation&ast;}
+\left\{
+    \begin{align&ast;}
+        n \dfrac{d c}{d t} &amp;= - n \, k&#95;{ads} \, c \left(1 - \dfrac{s}{s&#95;m}\right) + k&#95;{des} \, s
+        \\[1.5em]
+        \dfrac{d s}{d t} &amp;= n \,k&#95;{ads} \, c \left(1 - \dfrac{s}{s&#95;m}\right) - k&#95;{des} \, s
+    \end{align&ast;}
+\right.
+\end{equation&ast;}
+$$</p>
+<p>If we choose a non-dimensionalization of time based on the adsorption rate, we can rewrite the equations in terms of the non-dimensional parameters $\kappa$ and $\psi$:</p>
+<ul>
+<li>$t = \hat{t} \, k&#95;{ads}$, where $k&#95;{ads}$ is the adsorption rate</li>
+<li>$c = \hat{c} \, C&#95;0$, where $C&#95;0$ is the influent concentration</li>
+<li>$s = \hat{s} \, s&#95;m$ where $s&#95;{m}$ is the adsorption capacity</li>
+</ul>
+<p>We obtain that</p>
+<p>$$
+\begin{equation&ast;}
+\left\{
+    \begin{align&ast;}
+        \dfrac{d \hat{c}}{d \hat{t}} &amp;= - \hat{c} \left(1 - \hat{s}\right) + \dfrac{1}{\kappa \, \psi} \, \hat{s}
+        \\[1.5em]
+        \dfrac{d \hat{s}}{d \hat{t}} &amp;= \kappa \, \hat{c} \left(1 - \hat{s}\right)
+        - \dfrac{1}{\psi} \, \hat{s}
+    \end{align&ast;}
+\right.
+\end{equation&ast;}
+$$</p>
+<p>This system of equations can be rewritten as a matrix multiplication:</p>
+<p>$$
+\begin{equation&ast;}
+    \dfrac{d}{dt}
+    \begin{bmatrix}
+        \hat{c}\\
+        \hat{s}
+    \end{bmatrix}
+    =
+    \underbrace{
+    \begin{bmatrix}
+        -\left(1 - \hat{s}\right) &amp; {1}/{(\kappa \, \psi)} \\
+        \kappa \left(1 - \hat{s}\right) &amp; -{1}/{\psi}
+    \end{bmatrix}
+    }&#95;{A}
+    \begin{bmatrix}
+        \hat{c}\\
+        \hat{s}
+    \end{bmatrix}
+\end{equation&ast;}
+$$</p>
+<p>Even though this is still a non-linear problem, $\det{A} = 0$ for any value of $\hat{s}$ and $\kappa$, meaning that the system of equations has no unique solution. The steady-state solutions for this case are identical from the column case: the trivial $\hat{c} = \hat{s} = 0$ case, and the non-trivial parametric solution $\hat{s} = \kappa \, \psi \, \hat{c} / (1 + \kappa \, \psi \, \hat{c})$.</p>
+<p><strong>Varying $\psi$ and $\kappa$ in a batch experiment:</strong></p>
+<p><a href="/assets/img/logbook/batch&#95;adsorption&#95;phase&#95;diagrams.svg"><img alt="batch adsorption phase diagrams" src="/assets/img/logbook/batch&#95;adsorption&#95;phase&#95;diagrams.svg" title="Batch adsorption phase diagrams" /></a></p>
+<h4>Only forward adsorption</h4>
+<p>If $k&#95;{des} \to 0$, the system of equations simplifies to:</p>
+<p>$$
+\begin{equation&ast;}
+\left\{
+    \begin{align&ast;}
+        n \, \mathsf{v} \, \dfrac{\partial c}{\partial z} + n \dfrac{\partial c}{\partial t} &amp;= - n \, k&#95;{ads} \, c \left(1 - \dfrac{s}{s&#95;m}\right)
+        \\[1.5em]
+        \dfrac{\partial s}{\partial t} &amp;= n \,k&#95;{ads} \, c \left(1 - \dfrac{s}{s&#95;m}\right)
+    \end{align&ast;}
+\right.
+\end{equation&ast;}
+$$</p>
+<p>With $\kappa = n \, C&#95;0 / s&#95;m$, that system of equations in non-dimensional terms becomes:</p>
+<p>$$
+\left\{
+    \begin{align&ast;}
+        \dfrac{\partial \hat{c}}{\partial \hat{z}}
+        + \dfrac{\partial \hat{c}}{\partial \hat{t}}
+        &amp;=
+        - \mathsf{Da}&#95;{ads} \, \hat{c} \, \left(1 - \hat{s}\right)
+        \\[1.2em]
+        \dfrac{\partial \hat{s}}{\partial \hat{t}}
+        &amp;=
+        \kappa \, \mathsf{Da}&#95;{ads} \, \hat{c} \, \left(1 - \hat{s}\right)
+    \end{align&ast;}
+\right.
+$$</p>
+<h4>High adsorption capacity</h4>
+<p>If $s&#95;m \to \infty$, the reaction term representing adsortion becomes linear and the system of equations simplifies to:</p>
+<p>$$
+\begin{equation&ast;}
+\left\{
+    \begin{align&ast;}
+        n \, \mathsf{v} \, \dfrac{\partial c}{\partial z} + n \dfrac{\partial c}{\partial t} &amp;= - n \, k&#95;{ads} \, c  + k&#95;{des} \, s
+        \\[1.5em]
+        \dfrac{\partial s}{\partial t} &amp;= n \,k&#95;{ads} \, c - k&#95;{des} \, s
+    \end{align&ast;}
+\right.
+\end{equation&ast;}
+$$</p>
+<p>Since $s&#95;m$ is no longer a parameter in this case, we need to choose another non-dimensionalization for $s$:</p>
+<ul>
+<li>$z = \hat{z} \, L$, where $L$ is the column length</li>
+<li>$t = \hat{t} \, L / \mathsf{v}$, where $\mathsf{v}$ is the pore water velocity</li>
+<li>$c = \hat{c} \, C&#95;0$, where $C&#95;0$ is the influent concentration</li>
+<li>$s = n \, C&#95;0 \, \hat{s}$ where $n$ is the porosity</li>
+</ul>
+<p>With those, the non-dimensional equations become:</p>
+<p>$$
+\left\{
+    \begin{align&ast;}
+        \dfrac{\partial \hat{c}}{\partial \hat{z}}
+        + \dfrac{\partial \hat{c}}{\partial \hat{t}}
+        &amp;=
+        - \mathsf{Da}&#95;{ads} \, \hat{c}
+        + \mathsf{Da}&#95;{des} \, \hat{s}
+        \\[1.2em]
+        \dfrac{\partial \hat{s}}{\partial \hat{t}}
+        &amp;=
+        \mathsf{Da}&#95;{ads} \, \hat{c}
+        - \mathsf{Da}&#95;{des} \, \hat{s}
+    \end{align&ast;}
+\right.
+$$</p>
+<hr />
+<h3>Discretization and finite differences</h3>
+<p>The derivative of a single variable function is</p>
+<p>$$
+    f'(x) = \dfrac{df}{dx} = \lim&#95;{\Delta x \to 0} \dfrac{f(x + \Delta x) - f(x)}{\Delta x}
+$$</p>
+<p>The derivative can be approximated using a the <a href="https://en.wikipedia.org/wiki/Finite&#95;difference">finite difference</a> method:</p>
+<p>$$
+\begin{array}{rc}
+    \textsf{Forward finite difference:} &amp;
+    f'(x) \approx \dfrac{f(x + \Delta x) - f(x)}{\Delta x}\\[1.5em]
+    \textsf{Backward finite difference:} &amp;
+    f'(x) \approx \dfrac{f(x) - f(x - \Delta x)}{\Delta x}
+\end{array}
+$$</p>
+<p>We will approximate the derivatives with a backward difference for the advective term and a forward difference for the temporal term:</p>
+<p>$$
+    \dfrac{\partial \hat{c}}{\partial \hat{z}} \approx \dfrac{\hat{c}|&#95;{k} - \hat{c}|&#95;{k-1}}{\Delta \hat{z}}
+$$</p>
+<p>$$
+    \dfrac{\partial \hat{c}}{\partial \hat{t}} \approx \dfrac{\hat{c}|^{t+1} - \hat{c}|^{t}}{\Delta \hat{t}}
+$$</p>
+<p>$$
+    \dfrac{\partial \hat{s}}{\partial \hat{t}} \approx \dfrac{\hat{s}|^{t+1} - \hat{s}|^{t}}{\Delta \hat{t}}
+$$</p>
+<p>The superscripts $t$ and $t+1$ denote the time discretization and the subscripts $k$ and $k-1$ denote the discretization in space. For an <em>explicit</em> scheme, we can rewrite the non-dimensional mass balance equation as:</p>
+<p>$$
+\left\{
+    \begin{align&ast;}
+        \dfrac{\hat{c}|^{t}&#95;{k} - \hat{c}|^{t}&#95;{k-1}}{\Delta \hat{z}}
+        + \dfrac{\hat{c}|^{t+1}&#95;{k} - \hat{c}|^{t}&#95;{k}}{\Delta \hat{t}}
+        &amp;=
+        - \mathsf{Da}&#95;{ads} \,\hat{c}|^{t}&#95;{k} \left(1 - \hat{s}|^{t}&#95;{k}\right)
+        + \dfrac{\mathsf{Da}&#95;{ads}}{\kappa} \, \hat{s}|^{t}&#95;{k}
+        \\[1.2em]
+        \dfrac{\hat{s}|^{t+1}&#95;{k} - \hat{s}|^{t}&#95;{k}}{\Delta \hat{t}}
+        &amp;=
+        \kappa \, \mathsf{Da}&#95;{ads} \, \hat{c}|^{t}&#95;{k} \left(1 - \hat{s}|^{t}&#95;{k}\right)
+        - \mathsf{Da}&#95;{des} \, \hat{s}|^{t}&#95;{k}
+    \end{align&ast;}
+\right.
+$$</p>
+<p>Solving for the unknowns $\hat{c}|^{t+1}&#95;{k}$ and $\hat{s}|^{t+1}&#95;{k}$:</p>
+<p>$$
+\begin{equation}
+\left\{
+\begin{align&ast;}
+        \hat{c}|^{t+1}&#95;{k}
+        &amp;=
+        \Delta \hat{t} \left[
+            - \mathsf{Da}&#95;{ads} \,\hat{c}|^{t}&#95;{k} \left(1 - \hat{s}|^{t}&#95;{k}\right)
+            + \dfrac{\mathsf{Da}&#95;{ads}}{\kappa} \, \hat{s}|^{t}&#95;{k}
+        \right]
+        - \dfrac{\Delta \hat{t}}{\Delta \hat{z}}\left(\hat{c}|^{t}&#95;{k} - \hat{c}|^{t}&#95;{k-1}\right)
+        + \hat{c}|^{t}&#95;{k}
+        \\[1.2em]
+        \hat{s}|^{t+1}&#95;{k}
+        &amp;=
+        \Delta \hat{t} \left[
+            \kappa \, \mathsf{Da}&#95;{ads} \, \hat{c}|^{t}&#95;{k} \left(1 - \hat{s}|^{t}&#95;{k}\right)
+            - \mathsf{Da}&#95;{des} \, \hat{s}|^{t}&#95;{k}
+        \right]
+        + \hat{s}|^{t}&#95;{k}
+\end{align&ast;}
+\right.
+\end{equation}
+$$</p>
+<p>The boundary and initial conditions can be arbitrary but in general:</p>
+<p>$$
+\begin{align&ast;}
+    \hat{c}(\hat{t} = 0, \, \hat{z}) = 0 \\
+    \hat{c}(\hat{t}, \, \hat{z} = 0) = 1 \\
+    \hat{s}(\hat{t} = 0, \, \hat{z}) = 0 \\
+\end{align&ast;}
+$$</p>
+<p>Finally, this numerical scheme is stable if the <a href="https://en.wikipedia.org/wiki/Courant%E2%80%93Friedrichs%E2%80%93Lewy&#95;condition">CFL condition</a> is met:</p>
+<p>$$
+    \mathsf{CFL} = \dfrac{\Delta{\hat{t}}}{\Delta{\hat{z}}} \leq 1
+$$</p>
+<hr />
+<h3>Competitive adsorption</h3>
+<p>Suposse that two contaminants, $c&#95;1$ and $c&#95;2$, flow in our column system and can adsorb to the adsorbant, which does not differentiate between one or the other. The mass balance equations from such system are:</p>
+<p>$$
+\begin{equation}
+\left\{
+    \begin{array}{rcl}
+        n \, \mathsf{v} \dfrac{\partial c&#95;1}{\partial z}
+        + n \dfrac{\partial c&#95;1}{\partial t}
+        &amp;=&amp;
+        - n \, k&#95;{ads, 1} \, c&#95;1 \left(1 - \dfrac{s&#95;1 + s&#95;2}{s&#95;m}\right)
+        + k&#95;{des, 2} \, s&#95;2
+        \\[1.5em]
+        \dfrac{\partial s&#95;1}{\partial t}
+        &amp;=&amp;
+        n \,k&#95;{ads, 1} \, c&#95;1 \left(1 - \dfrac{s&#95;1 + s&#95;2}{s&#95;m}\right)
+        - k&#95;{des, 1} \, s&#95;1
+        \\[1.5em]
+        n \, \mathsf{v} \, \dfrac{\partial c&#95;2}{\partial z}
+        + n \dfrac{\partial c&#95;2}{\partial t}
+        &amp;=&amp;
+        - n \, k&#95;{ads, 2} \, c&#95;2 \left(1 - \dfrac{s&#95;1 + s&#95;2}{s&#95;m}\right)
+        + k&#95;{des, 2} \, s&#95;2
+        \\[1.5em]
+        \dfrac{\partial s&#95;2}{\partial t}
+        &amp;=&amp; n \,k&#95;{ads, 2} \, c&#95;2 \left(1 - \dfrac{s&#95;1 + s&#95;2}{s&#95;m}\right)
+        - k&#95;{des, 2} \, s&#95;2
+    \end{array}
+\right.
+\end{equation}
+$$</p>
+<p>Where $\mathsf{v}$ is the pore velocity, $n$ is the porosity, $c&#95;1$ and $c&#95;2$ are the mass concentrations of the two contaminants in the aqueous phase, $s&#95;1$ and $s&#95;2$ are the concentrations in the adsorbed phase, $k&#95;{ads, 1}$ and $k&#95;{ads, 2}$ are adsorption rates, $k&#95;{des, 1}$ and $k&#95;{des, 2}$ are desorption rates, and $s&#95;m$ is the adsorption capacity. Notice that the adsorption capacity is unique and a property of the adsorbant material. These equations are coupled by the non-linear term ($1 - \sum&#95;j s&#95;j/s&#95;m$) and the idea is to determine what fractions of $c&#95;1$ and $c&#95;2$ are adsorbed.</p>
+<p>In general, for $N$ contaminants, we end up with $2N$ mass conservation equations and $2N + 1$ parameters:</p>
+<p>$$
+\begin{equation}
+\left\{
+    \begin{array}{rcl}
+        n \, \mathsf{v} \dfrac{\partial c&#95;i}{\partial z}
+        + n \dfrac{\partial c&#95;i}{\partial t}
+        &amp;=&amp;
+        - n \, k&#95;{ads, i} \, c&#95;i \left(1 - \dfrac{\sum&#95;j s&#95;j}{s&#95;m}\right)
+        + k&#95;{des, i} \, s&#95;i
+        \\[1.5em]
+        \dfrac{\partial s&#95;i}{\partial t}
+        &amp;=&amp; n \,k&#95;{ads, i} \, c&#95;i \left(1 - \dfrac{\sum&#95;j s&#95;j}{s&#95;m}\right)
+        - k&#95;{des, i} \, s&#95;i
+    \end{array}
+\right.
+\end{equation}
+$$</p>
+<h4>Dimensionless equations</h4>
+<p>Just like before, we pick a set of characteristic time, lenght and concentration:</p>
+<ul>
+<li>$z = \hat{z} \, L$, where $L$ is the column length</li>
+<li>$t = \hat{t} L / \mathsf{v}$, where $\mathsf{v}$ is the pore velocity</li>
+<li>$c&#95;j = \hat{c}&#95;j \, C&#95;j$, where $C&#95;j$ is the influent concentration of contaminant $j$</li>
+<li>$s&#95;j = \hat{s}&#95;j \, s&#95;m$ where $s&#95;{m}$ is the adsorption capacity</li>
+</ul>
+<p>Replacing those in the mass balance equations:</p>
+<p>$$
+\left\{
+    \begin{array}{rcl}
+        \dfrac{n \, \mathsf{v} \, C&#95;1}{L} \dfrac{\partial \hat{c}&#95;1}{\partial \hat{z}}
+        + \dfrac{n \, \mathsf{v} \, C&#95;1}{L} \dfrac{\partial \hat{c}&#95;1}{\partial \hat{t}}
+        &amp;=&amp;
+        - n \, k&#95;{ads, 1} \, C&#95;1 \hat{c}&#95;1 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2\right)
+        + k&#95;{des,1} \, s&#95;m \, \hat{s}&#95;1
+        \\[1.5em]
+        \dfrac{n \, \mathsf{v} \, s&#95;m}{L}\dfrac{\partial \hat{s}&#95;1}{\partial \hat{t}}
+        &amp;=&amp;
+        n \,k&#95;{ads, 1} \, C&#95;1 \, \hat{c}&#95;1 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2 \right) - k&#95;{des, 1} \, s&#95;m \, \hat{s}&#95;1
+        \\[1.5em]
+        \dfrac{n \, \mathsf{v} \, C&#95;2}{L} \dfrac{\partial \hat{c}&#95;2}{\partial \hat{z}}
+        + \dfrac{n \, \mathsf{v} \, C&#95;2}{L} \dfrac{\partial \hat{c}&#95;2}{\partial \hat{t}}
+        &amp;=&amp;
+        - n \, k&#95;{ads, 2} \, C&#95;2 \hat{c}&#95;2 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2\right)
+        + k&#95;{des, 2} \, s&#95;m \, \hat{s}&#95;2
+        \\[1.5em]
+        \dfrac{n \, \mathsf{v} \, s&#95;m}{L}\dfrac{\partial \hat{s}&#95;2}{\partial \hat{t}}
+        &amp;=&amp;
+        n \,k&#95;{ads, 2} \, C&#95;2 \, \hat{c}&#95;2 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2 \right) - k&#95;{des, 2} \, s&#95;m \, \hat{s}&#95;2
+    \end{array}
+\right.
+$$</p>
+<p>Simplifying each equation:</p>
+<p>$$
+\left\{
+    \begin{array}{rcl}
+        \dfrac{\partial \hat{c}&#95;1}{\partial \hat{z}}
+        + \dfrac{\partial \hat{c}&#95;1}{\partial \hat{t}}
+        &amp;=&amp;
+        - \dfrac{k&#95;{ads, 1} \, L}{\mathsf{v}} \, \hat{c}&#95;1 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2\right)
+        + \dfrac{k&#95;{des,1} \, s&#95;m \, L}{n \, \mathsf{v} \, C&#95;1} \, \hat{s}&#95;1
+        \\[1.5em]
+        \dfrac{\partial \hat{s}&#95;1}{\partial \hat{t}}
+        &amp;=&amp;
+        \dfrac{n \, k&#95;{ads, 1} \, C&#95;1 \, L}{s&#95;m \, \mathsf{v}} \, \hat{c}&#95;1 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2 \right)
+        - \dfrac{k&#95;{des, 1} \, L}{\mathsf{v}} \, \hat{s}&#95;1
+        \\[1.5em]
+        \dfrac{\partial \hat{c}&#95;2}{\partial \hat{z}}
+        + \dfrac{\partial \hat{c}&#95;2}{\partial \hat{t}}
+        &amp;=&amp;
+        - \dfrac{k&#95;{ads, 2} \, L}{\mathsf{v}} \, \hat{c}&#95;2 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2\right)
+        + \dfrac{k&#95;{des,2} \, s&#95;m \, L}{n \, \mathsf{v} \, C&#95;2} \, \hat{s}&#95;2
+        \\[1.5em]
+        \dfrac{\partial \hat{s}&#95;2}{\partial \hat{t}}
+        &amp;=&amp;
+        \dfrac{n \,k&#95;{ads, 2} \, C&#95;2 \, L}{s&#95;m \, \mathsf{v}} \, \hat{c}&#95;2 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2 \right)
+        - \dfrac{k&#95;{des, 2} \, L}{\mathsf{v}} \, \hat{s}&#95;2
+    \end{array}
+\right.
+$$</p>
+<p>Consider the following replacements:</p>
+<p>$$
+\begin{array}{rcl}
+    \mathsf{Da}&#95;{ads|j} &amp;=&amp; \dfrac{k&#95;{ads, j} \, L}{\mathsf{v}} \\[1.5em]
+    p&#95;{2|j} &amp;=&amp; \dfrac{k&#95;{des,j} \, s&#95;m \, L}{n \, \mathsf{v} \, C&#95;j} \\[1.5em]
+    p&#95;{3|j} &amp;=&amp; \dfrac{n \, k&#95;{ads, j} \, C&#95;j \, L}{s&#95;m \, \mathsf{v}} \\[1.5em]
+    \mathsf{Da}&#95;{des|j} &amp;=&amp; \dfrac{k&#95;{des, j} \, L}{\mathsf{q}}
+\end{array}
+$$</p>
+<p>Where $\mathsf{Da}$ are Damköhler numbers, $p$ are other non-dimensional parameters, and $j$ indicates the contaminant. Replacing in the equations we obtain:</p>
 <p>$$
     \left\{
-        \begin{align&ast;}
-            \dfrac{d \hat{c}}{d \hat{t}} 
-            &amp;= 
-            - \hat{c} \left(1 - \hat{s}\right) 
-            + \dfrac{\pi_4}{\pi_3} \, \hat{s}
-            \\
-            \dfrac{d \hat{s}}{d \hat{t}} 
-            &amp;= 
-            \pi_3 \, \hat{c} \left(1 - \hat{s}\right) - \pi_4 \, \hat{s}
-        \end{align&ast;}
+        \begin{array}{rcl}
+            \dfrac{\partial \hat{c}&#95;1}{\partial \hat{z}}
+            + \dfrac{\partial \hat{c}&#95;1}{\partial \hat{t}}
+            &amp;=&amp;
+            - \mathsf{Da}&#95;{ads|1} \, \hat{c}&#95;1 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2\right)
+            + p&#95;{2|1} \, \hat{s}&#95;1
+            \\[1.5em]
+            \dfrac{\partial \hat{s}&#95;1}{\partial \hat{t}}
+            &amp;=&amp;
+            p&#95;{3|1} \, \hat{c}&#95;1 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2 \right)
+            - \mathsf{Da}&#95;{des|1} \, \hat{s}&#95;1
+            \\[1.5em]
+            \dfrac{\partial \hat{c}&#95;2}{\partial \hat{z}}
+            + \dfrac{\partial \hat{c}&#95;2}{\partial \hat{t}}
+            &amp;=&amp;
+            - \mathsf{Da}&#95;{ads|2} \, \hat{c}&#95;2 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2\right)
+            + p&#95;{2|2} \, \hat{s}&#95;2
+            \\[1.5em]
+            \dfrac{\partial \hat{s}&#95;2}{\partial \hat{t}}
+            &amp;=&amp;
+            p&#95;{3|2} \, \hat{c}&#95;2 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2 \right)
+            - \mathsf{Da}&#95;{des|2} \, \hat{s}&#95;2
+        \end{array}
     \right.
 $$</p>
-<p><strong>Steady state and interesting $(\hat{c}, \hat{s})$ points</strong></p>
-<p>A trivial steady state is found at $(0,0)$. A non-trivial steady-state follows the line defined by </p>
+<p>Notice again that:</p>
 <p>$$
-    \left(-\dfrac{\pi_4}{\pi_3} \dfrac{\hat{s}}{(\hat{s} - 1)}, \; \hat{s}\right)
+    \dfrac{\mathsf{Da}&#95;{ads|j}}{p&#95;{2|j}} = \dfrac{p&#95;{3|j}}{\mathsf{Da}&#95;{des|j}} = \dfrac{n \, k&#95;{ads, j} \, C&#95;j}{k&#95;{des, j} \, s&#95;m}  = \kappa&#95;{j} \psi&#95;{j}
 $$</p>
-<p>The following phase diagrams are obtained for this dynamical system varying values for $\pi_3$ and $\pi_4$. </p>
-<p><a href="/assets/img/logbook/phase_diagram_1.svg"><img alt="Phase diagram" src="/assets/img/logbook/phase_diagram_1.svg" title="Phase diagram varying π3 and π4, constant π2" /></a></p>
+<p>This acts as a constraint in the equations because the four parameters per contaminant are not completely independent. The system of can be reduced to</p>
+<p>$$
+\left\{
+    \begin{array}{rcl}
+        \dfrac{\partial \hat{c}&#95;1}{\partial \hat{z}}
+        + \dfrac{\partial \hat{c}&#95;1}{\partial \hat{t}}
+        &amp;= &amp;
+        - \mathsf{Da}&#95;{ads|1} \, \hat{c}&#95;1 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2\right)
+        + \dfrac{\mathsf{Da}&#95;{des|1}}{\kappa&#95;{1}} \, \hat{s}&#95;1
+        \\[1.5em]
+        \dfrac{\partial \hat{s}&#95;1}{\partial \hat{t}}
+        &amp;= &amp;
+        \kappa \, \mathsf{Da}&#95;{ads|1} \, \hat{c}&#95;1 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2 \right)
+        - \mathsf{Da}&#95;{des|1} \, \hat{s}&#95;1
+        \\[1.5em]
+        \dfrac{\partial \hat{c}&#95;2}{\partial \hat{z}}
+        + \dfrac{\partial \hat{c}&#95;2}{\partial \hat{t}}
+        &amp;= &amp;
+        - \mathsf{Da}&#95;{ads|2} \, \hat{c}&#95;2 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2\right)
+        + \dfrac{\mathsf{Da}&#95;{des|2}}{\kappa&#95;{2}} \, \hat{s}&#95;2
+        \\[1.5em]
+        \dfrac{\partial \hat{s}&#95;2}{\partial \hat{t}}
+        &amp;= &amp;
+        \kappa \, \mathsf{Da}&#95;{ads|2} \, \hat{c}&#95;2 \left(1 - \hat{s}&#95;1 - \hat{s}&#95;2 \right)
+        - \mathsf{Da}&#95;{des|2} \, \hat{s}&#95;1
+\end{array}
+\right.
+$$</p>
+<p>Or, in general for a system of $N$ contaminants:</p>
+<p>$$
+\left\{
+    \begin{array}{rcl}
+        \dfrac{\partial \hat{c}&#95;j}{\partial \hat{z}}
+        + \dfrac{\partial \hat{c}&#95;j}{\partial \hat{t}}
+        &amp;= &amp;
+        - \mathsf{Da}&#95;{ads|j} \, \hat{c}&#95;j \left(1 - \sum&#95;i{\hat{s}&#95;i}\right)
+        + \dfrac{\mathsf{Da}&#95;{des|j}}{\kappa&#95;{j}} \, \hat{s}&#95;j
+        \\[1.5em]
+        \dfrac{\partial \hat{s}&#95;j}{\partial \hat{t}}
+        &amp;= &amp;
+        \kappa \, \mathsf{Da}&#95;{ads|j} \, \hat{c}&#95;j \left(1 - \sum&#95;i{\hat{s}&#95;i}\right)
+        - \mathsf{Da}&#95;{des|j} \, \hat{s}&#95;j
+\end{array}
+\right.
+$$</p>
+<h3>Numerical implementation</h3>
+<p>The same explicit finite-difference scheme derived in Equation (6) can be used here. The only difference is that we need to consider the different adsorption/desorption rates $\mathsf{Da}&#95;{ads|j}$ and $\mathsf{Da}&#95;{des|j}$ for each contaminant $j$.</p>
+<p>$$
+\begin{equation}
+\left\{
+\begin{align&ast;}
+        \hat{c}&#95;j|^{t+1}&#95;{k}
+        &amp;=
+        \Delta \hat{t} \left[
+            - \mathsf{Da}&#95;{ads|j} \,\hat{c}&#95;j|^{t}&#95;{k} \left(1 - \sum&#95;i^N \hat{s}&#95;i|^{t}&#95;{k}\right)
+            + \dfrac{\mathsf{Da}&#95;{des|j}}{\kappa&#95;j} \, \hat{s}&#95;j|^{t}&#95;{k}
+        \right]
+        \\
+        &amp; \qquad
+        - \dfrac{\Delta \hat{t}}{\Delta \hat{z}}\left(\hat{c}&#95;j|^{t}&#95;{k} - \hat{c}&#95;j|^{t}&#95;{k-1}\right)
+        + \hat{c}&#95;j|^{t}&#95;{k}
+        \\[1.2em]
+        \hat{s}&#95;j|^{t+1}&#95;{k}
+        &amp;=
+        \Delta \hat{t} \left[
+            \kappa&#95;j \, \mathsf{Da}&#95;{ads|j} \, \hat{c}&#95;j|^{t}&#95;{k} \left(1 - \sum&#95;i^N \hat{s}&#95;i|^{t}&#95;{k}\right)
+            - \mathsf{Da}&#95;{des|j} \, \hat{s}&#95;j|^{t}&#95;{k}
+        \right]
+        + \hat{s}&#95;j|^{t}&#95;{k}
+\end{align&ast;}
+\right.
+\end{equation}
+$$</p>
+<h4>Column experiments</h4>
+<p><strong>Two contaminants</strong></p>
+<p>Same adsorption rates but different desorption rates.</p>
+<p><a href="/assets/img/logbook/competitive&#95;btc&#95;two&#95;compounds.svg"><img alt="Phase diagram" src="/assets/img/logbook/competitive&#95;btc&#95;two&#95;compounds.svg" title="Competitive sorption of two contaminants" /></a></p>
+<p><strong>A more complex mixture</strong></p>
+<p><a href="/assets/img/logbook/competitive&#95;btc.svg"><img alt="Phase diagram" src="/assets/img/logbook/competitive&#95;btc.svg" title="Competitive sorption of six contaminants" /></a></p>
+<!-- $$
+    \left\\{
+        \begin{align&ast;}
+            \dfrac{n \, v \, C&#95;0}{L} \dfrac{\partial \hat{c}}{\partial \hat{z}}
+            + (n \, C&#95;0 \, k&#95;{ads}) \dfrac{\partial \hat{c}}{\partial \hat{t}}
+            =
+            - n \, k&#95;{ads} \, C&#95;0 \, \hat{c} \left(1 - \hat{s}\right)
+            + k&#95;{des} \, s&#95;m \, \hat{s}
+            \\\\
+            \left(s&#95;m \, k&#95;{ads}\right)\dfrac{\partial \hat{s}}{\partial \hat{t}}
+            =
+            n \,k&#95;{ads} \, C&#95;0 \, \hat{c} \left(1 - \hat{s}\right) - k&#95;{des} \, s&#95;m \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$
+
+Dividing both sides by $n \, C&#95;0 \, k&#95;{ads}$ in the top equation, and by $s&#95;m \, k&#95;{ads}$ in the bottom equation:
+
+$$
+    \left\\{
+        \begin{align&ast;}
+            \dfrac{v}{L \, k&#95;{ads}} \dfrac{\partial \hat{c}}{\partial \hat{z}}
+            + \dfrac{\partial \hat{c}}{\partial \hat{t}}
+            &=
+            - \hat{c} \left(1 - \hat{s}\right)
+            + \dfrac{k&#95;{des} \, s&#95;m}{n \, C&#95;0 \, k&#95;{ads}} \, \hat{s}
+            \\\\
+            \dfrac{\partial \hat{s}}{\partial \hat{t}}
+            &=
+            \dfrac{n \, C&#95;0}{s&#95;m}\, \hat{c} \left(1 - \hat{s}\right) - \dfrac{k&#95;{des}}{k&#95;{ads}} \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$
+
+From these transformation, the following non-dimensional parameters arise:
+
+$$
+\begin{align}
+    \pi&#95;1 &= \dfrac{v}{L \, k&#95;{ads}} \\\\[1.5em]
+    \pi&#95;2 &= \dfrac{k&#95;{des} \, s&#95;m}{n \, C&#95;0 \, k&#95;{ads}} \\\\[1.5em]
+    \pi&#95;3 &= \dfrac{n \, C&#95;0}{s&#95;m} \\\\[1.5em]
+    \pi&#95;4 &= \dfrac{k&#95;{des}}{k&#95;{ads}} \\\\[1.5em]
+\end{align}
+$$
+
+$\pi&#95;1$ is the inverse of the [Damköhler number](https://en.wikipedia.org/wiki/Damk%C3%B6hler&#95;numbers) relating reaction and advection rate. $\pi&#95;2$ condenses the three Thomas model parameters. $\pi&#95;3$ compares the initial concentration to the adsorption capacity. $\pi&#95;4$ compares the desorption and adorption rates directly.
+
+The system of PDE becomes:
+
+$$
+    \left\\{
+        \begin{align&ast;}
+            \pi&#95;1 \dfrac{\partial \hat{c}}{\partial \hat{z}}
+            + \dfrac{\partial \hat{c}}{\partial \hat{t}}
+            &=
+            - \hat{c} \left(1 - \hat{s}\right)
+            + \pi&#95;2 \, \hat{s}
+            \\\\
+            \dfrac{\partial \hat{s}}{\partial \hat{t}}
+            &=
+            \pi&#95;3 \, \hat{c} \left(1 - \hat{s}\right) - \pi&#95;4 \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$
+
+Notice that
+
+$$
+    \pi&#95;2 = \dfrac{\pi&#95;4}{\pi&#95;3}
+$$
+
+So, replacing we obtain:
+
+$$
+    \left\\{
+        \begin{align&ast;}
+            \pi&#95;1 \dfrac{\partial \hat{c}}{\partial \hat{z}}
+            + \dfrac{\partial \hat{c}}{\partial \hat{t}}
+            &=
+            - \hat{c} \left(1 - \hat{s}\right)
+            + \dfrac{\pi&#95;4}{\pi&#95;3} \, \hat{s}
+            \\\\
+            \dfrac{\partial \hat{s}}{\partial \hat{t}}
+            &=
+            \pi&#95;3 \, \hat{c} \left(1 - \hat{s}\right) - \pi&#95;4 \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$
+
+Or,
+
+$$
+    \begin{align&ast;}
+        \pi&#95;1 \dfrac{\partial \hat{c}}{\partial \hat{z}}
+        + \dfrac{\partial \hat{c}}{\partial \hat{t}}
+        &=
+        - \dfrac{1}{\pi&#95;3}\dfrac{\partial \hat{s}}{\partial \hat{t}}
+    \end{align&ast;}
+$$
+
+**What if...**
+
+In the case of $\pi&#95;1 \to 0$ , the rate of adsorption is much faster than the advection rate. In that case, the column experiment approximates a chemostat simulation.
+
+If $\pi&#95;2 = 1$, $\pi&#95;3 = \pi&#95;4$ and desorption and adsoprtion are equally important. In that case, $k&#95;{des} \, s&#95;m = n \, C&#95;0 \, k&#95;{ads}$. If $\pi&#95;2 \gt 1$, $\pi&#95;4 \gt \pi&#95;3$ and desorption dominates. Conversely, if $\pi&#95;2 \lt 1$, $\pi&#95;4 \lt \pi&#95;3$ and adsorption dominates. -->
+
+<!-- ### Simplifying to a batch experiment
+
+Consider the case where $\pi&#95;1 \to 0$. The system of equations simplifies to:
+
+$$
+    \left\\{
+        \begin{align&ast;}
+            \dfrac{d \hat{c}}{d \hat{t}}
+            &=
+            - \hat{c} \left(1 - \hat{s}\right)
+            + \dfrac{\pi&#95;4}{\pi&#95;3} \, \hat{s}
+            \\\\
+            \dfrac{d \hat{s}}{d \hat{t}}
+            &=
+            \pi&#95;3 \, \hat{c} \left(1 - \hat{s}\right) - \pi&#95;4 \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$
+
+**Steady state and interesting $(\hat{c}, \hat{s})$ points**
+
+A trivial steady state is found at $(0,0)$. A non-trivial steady-state follows the line defined by
+
+$$
+    \left(-\dfrac{\pi&#95;4}{\pi&#95;3} \dfrac{\hat{s}}{(\hat{s} - 1)}, \; \hat{s}\right)
+$$
+
+The following phase diagrams are obtained for this dynamical system varying values for $\pi&#95;3$ and $\pi&#95;4$.
+
+[![Phase diagram](/assets/img/logbook/phase&#95;diagram&#95;1.svg "Phase diagram varying π3 and π4, constant π2")](/assets/img/logbook/phase&#95;diagram&#95;1.svg)
+
+
+### An alternative non-dimensional analysis
+
+We can use a different representative time scale for the non-dimensionalization based on the advective rate. This is actually the most common approach and it will be helpful when dealing with more that a single contaminant.
+
+- $z = \hat{z} \, L$, where $L$ is the column length
+- $t = \hat{t} \, L / \mathsf{v}$, where $\mathsf{v}$ is the pore water velocity
+- $c = \hat{c} \, C&#95;0$, where $C&#95;0$ is the influent concentration
+- $s = \hat{s} \, s&#95;m$ where $s&#95;{m}$ is the adsorption capacity
+
+
+The dimensionless parameters $p&#95;i$ are equivalent to the $\pi&#95;i$  parameters obtained the previous non-dimensionalization exercise. In fact, $\, p&#95;1 = 1/\pi&#95;1$, $\; p&#95;1/p&#95;2 = p&#95;3/p&#95;4 = 1/\pi&#95;2 = \pi&#95;3/\pi&#95;4$, and $\; p&#95;3 = \pi&#95;3/\pi&#95;1$.
+
+Replacing in the system of equations:
+
+$$
+    \left\\{
+        \begin{align&ast;}
+            \dfrac{\partial \hat{c}}{\partial \hat{z}}
+            + n \dfrac{\partial \hat{c}}{\partial \hat{t}}
+            &=
+            - p&#95;1 \, \hat{c} \left(1 - \hat{s}\right)
+            + p&#95;2 \, \hat{s}
+            \\\\[1.2em]
+            \dfrac{\partial \hat{s}}{\partial \hat{t}}
+            &=
+            p&#95;3 \, \hat{c} \left(1 - \hat{s}\right) - p&#95;4 \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$
+
+Dividing the first equation by $p&#95;1$, the second one by $p&#95;3$
+
+$$
+    \left\\{
+        \begin{align&ast;}
+            \dfrac{1}{p&#95;1}\left( \dfrac{\partial \hat{c}}{\partial \hat{z}}
+            + n \dfrac{\partial \hat{c}}{\partial \hat{t}}
+            \right)
+            &=
+            - \, \hat{c} \left(1 - \hat{s}\right)
+            + \dfrac{p&#95;2}{p&#95;1} \, \hat{s}
+            \\\\[1.2em]
+            \dfrac{1}{p&#95;3} \, \dfrac{\partial \hat{s}}{\partial \hat{t}}
+            &=
+            \hat{c} \left(1 - \hat{s}\right) - \dfrac{p&#95;4}{p&#95;3} \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$
+
+And replacing with $\pi$ parameters:
+
+$$
+    \left\\{
+        \begin{align&ast;}
+            \pi&#95;1\left( \dfrac{\partial \hat{c}}{\partial \hat{z}}
+            + n \dfrac{\partial \hat{c}}{\partial \hat{t}}
+            \right)
+            &=
+            - \, \hat{c} \left(1 - \hat{s}\right)
+            + \pi&#95;2 \, \hat{s}
+            \\\\[1.2em]
+            n \dfrac{\pi&#95;1}{\pi&#95;3} \, \dfrac{\partial \hat{s}}{\partial \hat{t}}
+            &=
+            \hat{c} \left(1 - \hat{s}\right) - \pi&#95;2 \, \hat{s}
+        \end{align&ast;}
+    \right.
+$$
+
+In this case, if $\pi&#95;1 \to 0$, both advective and temporal terms disappear and we end up with a single equation with two possible solutions: $\\\{0, 0\\}$ and $\\\{ \pi&#95;2 \, \hat{s}/(1 - \hat{s}) , \, \hat{s}\\}$. Those are the same expressions from earlier for the steady states of the system.
+-->
         </p>
     </div>
     </details>

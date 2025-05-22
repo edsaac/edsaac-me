@@ -96,6 +96,12 @@ main h3:hover {
     transform: scale(1.025, 1.0);
 }
 
+main h4 {
+    font-size: 1.0rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
 main p {
     font-size: .95rem;
     line-height: 1.45em;
@@ -110,7 +116,6 @@ main a {
 main p a {
     color: inherit;
     text-decoration: underline rgba(255, 0, 195, 0.35) dotted 1px;
-    background-color: rgba(255, 0, 195, 0.03);
 }
 
 main ul {
@@ -287,8 +292,8 @@ div.repo-description img {
     max-width: 85vw;
     overflow-x: scroll;
     overflow-y: clip;
-    padding-top: 0.15rem;
-    padding-bottom: 0.1em;
+    padding-top: 0.30rem;
+    padding-bottom: 0.30em;
 }
 
 .katex-display>.katex .katex-html {
