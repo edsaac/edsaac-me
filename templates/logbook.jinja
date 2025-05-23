@@ -2,7 +2,7 @@
 {% block content %}
 {% for entry in logbook %}
     {% if loop.first %}
-    <details open id="{{ entry.id }}">
+    <details id="{{ entry.id }}">
     {% else %}
     <details id="{{ entry.id }}">
     {%- endif %}
