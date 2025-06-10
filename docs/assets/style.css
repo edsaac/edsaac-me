@@ -21,7 +21,6 @@ footer {
     justify-content: center;
     align-items: center;
     gap: 15px;
-    /* Space between icons */
 }
 
 .social-links a img {
@@ -34,17 +33,24 @@ body {
     min-height: 100vh;
     font-family: monospace;
     font-size: 1.1rem;
-    background-color: #dfd2dd;
     overflow-x: hidden;
-    color: #888;
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: #dfd2dd;
+        color: #888;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #002;
+        color: #339999;
+    }
 }
 
 header {
-    /* margin-top: 0.25rem;
-    margin-left: 0.25rem;
-    margin-right: 0.25rem;
-    border-radius: 0.2rem; */
-
     background: #399;
     padding: 1rem 0rem 1rem;
     overflow: hidden;
@@ -155,17 +161,27 @@ div.menu .lnk-menu {
     margin-left: 0.25rem;
     margin-right: 0.25rem;
     padding: 0.25rem;
-    color: #fff;
+    color: #339999bb;
     text-decoration: none;
 }
+
 
 div.menu .lnk-menu:hover {
     color: #399;
 }
 
-div.menu .lnk-menu.i-am-here {
-    color: #399;
-    border-bottom: 1px solid #399;
+@media (prefers-color-scheme: light) {
+    div.menu .lnk-menu.i-am-here {
+        color: #399;
+        border-bottom: 1px solid #399;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    div.menu .lnk-menu.i-am-here {
+        color: #dfd2dd;
+        border-bottom: 1px solid #399;
+    }
 }
 
 div.content {
@@ -183,7 +199,10 @@ code {
     font-size: 0.8rem;
 }
 
-div.research-info {
+/* Research and presentation pages */
+
+div.research-info,
+div.presentation-info {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -191,34 +210,43 @@ div.research-info {
     justify-content: center;
 }
 
-div.research-info div.research-info-text {
+div.research-info div.research-info-text,
+div.presentation-info div.presentation-info-text {
     flex-basis: 100%;
     flex-grow: 2;
 }
 
-div.research-info div.research-info-img {
+div.research-info div.research-info-img,
+div.presentation-info div.presentation-info-img {
     text-align: center;
-
 }
 
-div.research-info div.research-info-img {
-    opacity: 0.90;
-    transition: .25s ease;
-}
-
-div.research-info div.research-info-img:hover {
+div.research-info div.research-info-img:hover,
+div.presentation-info div.presentation-info-img:hover {
     opacity: 1.0;
 }
 
-div.research-info div.research-info-img img {
+
+div.research-info div.research-info-img,
+div.presentation-info div.presentation-info-img {
+    opacity: 0.90;
+    transition: .15s ease;
+    padding: 1.2rem 0.4rem 0rem;
+    margin-bottom: 1rem;
+}
+
+div.research-info div.research-info-img img,
+div.presentation-info div.presentation-info-img img {
     width: 90%;
 }
 
-div.research-info div.research-info-img span.presentation-link {
+div.research-info div.research-info-img span.presentation-link,
+div.presentation-info div.presentation-info-img span.presentation-link {
     font-size: 0.8rem;
 }
 
-div.research-info div.research-info-img span.presentation-link:hover {
+div.research-info div.research-info-img span.presentation-link:hover,
+div.presentation-info div.presentation-info-img span.presentation-link:hover {
     font-weight: bold;
 }
 
@@ -236,6 +264,21 @@ div.research-info div.abstract-container span.abstract-link:hover {
 
 div.research-info div.citation-container:hover {
     color: #399;
+}
+
+/* Tweaks background for transparent figures */
+
+@media (prefers-color-scheme: light) {
+    div.research-info div.research-info-img {
+        background-color: rgba(0, 0, 0, 0);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    div.research-info div.research-info-img {
+        background-color: #dfd2dd;
+        border-radius: 4px;
+    }
 }
 
 div.course-info {
