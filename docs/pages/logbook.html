@@ -507,7 +507,32 @@ $$</p>
 \right.
 $$</p>
 <hr />
-<h3>Discretization and finite differences</h3>
+<h3>Solving the adsorption equations</h3>
+<h4>Analytical solution</h4>
+<p>The analytical solution for our partial differential equations is:</p>
+<p>$$
+\hat{c}
+=
+\frac{J\left(\dfrac{\mathsf{Da}&#95;{ads}}{1 + \kappa \psi} \, , \, \mathsf{Da}&#95;{ads}\, T\right)}
+{J\left(\dfrac{\mathsf{Da}&#95;{ads}}{1 + \kappa \psi} \, , \, \mathsf{Da}&#95;{ads}\, T\right) + \left[1 - J\left(\mathsf{Da}&#95;{ads}, \, \dfrac{\mathsf{Da}&#95;{ads}}{1 + \kappa \psi}\, T\right)\right]\exp{\left[\mathsf{Da}&#95;{ads} \, \dfrac{\kappa \psi}{1 + \kappa \psi} \, \left(1 - T\right)\right]}}
+$$</p>
+<p>Where</p>
+<p>$$
+T = \left( \psi + \kappa\right)\left( \hat{t} - 1 \right)
+$$</p>
+<p>And the $J$ function is defined as:</p>
+<p>$$
+J(x, y) = 1 - \int&#95;{0}^{x}{\exp{\left(-y - \tau\right)}} \, \underbrace{I&#95;0(2\sqrt{y\tau})}&#95;{\substack{\text{Modified}\\text{Bessel function}\\text{of first kind}}}\, d\tau
+$$</p>
+<p>Though it can be approximated as:</p>
+<p>$$
+J(x, y) \approx \dfrac{1}{2}
+\left[
+    1 - \text{erf}\left( \sqrt{x} - \sqrt{y} \right)
+    +  \dfrac{\exp{\left(-\left(\sqrt{x} - \sqrt{y}\right)^2\right)}}{\sqrt{\pi}\left[ \sqrt{y} + \sqrt[4]{xy} \right]}
+\right]
+$$</p>
+<h4>Discretization and finite differences</h4>
 <p>The derivative of a single variable function is</p>
 <p>$$
     f'(x) = \dfrac{df}{dx} = \lim&#95;{\Delta x \to 0} \dfrac{f(x + \Delta x) - f(x)}{\Delta x}
@@ -587,6 +612,10 @@ $$</p>
 <p>$$
     \mathsf{CFL} = \dfrac{\Delta{\hat{t}}}{\Delta{\hat{z}}} \leq 1
 $$</p>
+<h4>Numerical solver validation</h4>
+<p>Comparison between the analytical solution and the numerical solution:</p>
+<p><a href="/assets/img/logbook/adsorption&#95;compare&#95;analytical.svg"><img alt="Comparison analytical and numerical solution" src="/assets/img/logbook/adsorption&#95;compare&#95;analytical.svg" title="Comparison analytical and numerical solution" /></a></p>
+<hr />
 <h3>Breakthrough curve simulations</h3>
 <p><strong>Varying $\kappa$</strong></p>
 <p>Since $\kappa = n C&#95;0 / s&#95;m$, decreasing values of $\kappa$ represent increasing adsorption capacity.</p>
